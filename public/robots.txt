@@ -1,0 +1,20 @@
+# robots.txt pentru Telegondola Piatra Neamț
+# https://telegondolapiatraneamt.ro/robots.txt
+
+User-agent: *
+Allow: /
+
+# Blochează crawling pentru assets
+Disallow: /_next/static/
+Disallow: /api/
+
+# Permite crawling pentru imagini
+Allow: /images/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# Sitemap location
+Sitemap: https://telegondolapiatraneamt.ro/sitemap.xml

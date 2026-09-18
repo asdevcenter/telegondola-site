@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Despre Noi -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/despre-noi/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Puncte de Interes - Lista -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Contact -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/contact/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Galerie -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/galerie/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Tarife Program -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/tarife-program/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Tickets -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/tickets/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Terms -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/terms/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Privacy -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/confidentialitate/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Cookies -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/cookies/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- TOATE cele 33 de Puncte de Interes -->
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/curtea-domneasca/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/biserica-nasterea-sf-ioan-botezatorul/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/sinagoga-baal-shem-tov/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/casa-calistrat-hogas/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-istorie-arheologie/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-cucuteni/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-arta/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-etnografie/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/teatrul-tineretului/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/telegondola/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muntele-cozla/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muntele-pietricica/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-stiinte-naturale/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/lacul-batca-doamnei/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/parcul-central/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/gradina-nicu-albu/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/strandul-tineretului/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/stadionul-ceahlaul/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-bistrita/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-pangarati/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-neamt/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-agapia/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-varatec/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-secu/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-sihastria/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/manastirea-sihla/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/cheile-bicazului/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/lacul-rosu/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/masivul-ceahlau/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/lacul-izvorul-muntelui/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/rezervatia-dragos-voda/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/cetatea-neamt/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://telegondolapiatraneamt.ro/pages/puncte-de-interes/muzeul-ion-creanga/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+</urlset>

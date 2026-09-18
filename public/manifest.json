@@ -1,0 +1,27 @@
+{
+  "name": "Telegondola Piatra Neamț",
+  "short_name": "Telegondola",
+  "description": "Experiență unică cu telegondola pe Muntele Cozla. Priveliști spectaculoase și aventuri de neuitat în Piatra Neamț.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#B7D662",
+  "theme_color": "#B7D662",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "tourism", "entertainment"],
+  "lang": "ro",
+  "dir": "ltr"
+}
