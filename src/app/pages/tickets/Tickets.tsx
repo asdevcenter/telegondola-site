@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Navigation from '../../../components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useTelegondola, programScurt } from '../../../lib/telegondola'
 
 export default function Bilete() {
   const [cart, setCart] = useState([])
@@ -12,12 +13,18 @@ export default function Bilete() {
   const [selectedDate, setSelectedDate] = useState('')
   const [showUnavailableModal, setShowUnavailableModal] = useState(false)
 
+  // Programul vine de la panoul de administrare.
+  const { program, preturi, bilete } = useTelegondola()
+  const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
+  const economie = (cod: string, deRezerva: number) =>
+    bilete.find((b) => b.cod === cod)?.economie ?? deRezerva
+
   // Tipuri de bilete cu prețurile actualizate
   const ticketTypes = [
     {
       id: 'adult',
       name: 'Adulți',
-      price: 60,
+      price: pret('adult_dus_intors', 60),
       description: 'Urcare și coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -30,7 +37,7 @@ export default function Bilete() {
     {
       id: 'adult-single',
       name: 'Adulți (o cursă)',
-      price: 40,
+      price: pret('adult_o_cursa', 40),
       description: 'Urcare sau coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -43,7 +50,7 @@ export default function Bilete() {
     {
       id: 'copil',
       name: 'Copii (5-14 ani)',
-      price: 40,
+      price: pret('copil_dus_intors', 40),
       description: 'Urcare și coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -57,7 +64,7 @@ export default function Bilete() {
     {
       id: 'copil-single',
       name: 'Copii (o cursă)',
-      price: 30,
+      price: pret('copil_o_cursa', 30),
       description: 'Urcare sau coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -70,7 +77,7 @@ export default function Bilete() {
     {
       id: 'local-adult',
       name: 'Localnici - adulți',
-      price: 25,
+      price: pret('localnic_adult', 25),
       description: 'Urcare și coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -84,7 +91,7 @@ export default function Bilete() {
     {
       id: 'local-copil',
       name: 'Localnici - copii',
-      price: 15,
+      price: pret('localnic_copil', 15),
       description: 'Urcare și coborâre',
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -102,17 +109,17 @@ export default function Bilete() {
       id: 'grup20',
       name: 'Grup 20+ persoane',
       description: 'Tarif redus pentru grupuri',
-      price: '40 lei adulți / 25 lei copii',
+      price: `${pret('grup20_adult', 40)} lei adulți / ${pret('grup20_copil', 25)} lei copii`,
       features: ['1 însoțitor gratuit la 20 persoane', 'Urcare și coborâre'],
-   
+
     },
     {
       id: 'grup100',
       name: 'Grup 100+ persoane',
       description: 'Mega reducere pentru grupuri mari',
-      price: '30 lei adulți / 20 lei copii',
+      price: `${pret('grup100_adult', 30)} lei adulți / ${pret('grup100_copil', 20)} lei copii`,
       features: ['1 însoțitor gratuit la 20 persoane', 'Urcare și coborâre'],
-     
+
       highlight: true
     }
   ]
@@ -122,33 +129,33 @@ export default function Bilete() {
     {
       id: 'abo5adult',
       name: '5 călătorii Adulți',
-      price: 100,
+      price: pret('abonament_5_adult', 100),
       description: '1 călătorie = urcare SAU coborâre',
-      savings: 100,
+      savings: economie('abonament_5_adult', 100),
       color: 'from-orange-500 to-orange-400'
     },
     {
       id: 'abo5copil',
       name: '5 călătorii Copii',
-      price: 50,
+      price: pret('abonament_5_copil', 50),
       description: '1 călătorie = urcare SAU coborâre',
-      savings: 100,
+      savings: economie('abonament_5_copil', 100),
       color: 'from-pink-500 to-pink-400'
     },
     {
       id: 'abo10adult',
       name: '10 călătorii Adulți',
-      price: 150,
+      price: pret('abonament_10_adult', 150),
       description: '1 călătorie = urcare SAU coborâre',
-      savings: 250,
+      savings: economie('abonament_10_adult', 250),
       color: 'from-purple-500 to-purple-400'
     },
     {
       id: 'abo10copil',
       name: '10 călătorii Copii',
-      price: 100,
+      price: pret('abonament_10_copil', 100),
       description: '1 călătorie = urcare SAU coborâre',
-      savings: 200,
+      savings: economie('abonament_10_copil', 200),
       color: 'from-indigo-500 to-indigo-400'
     }
   ]
@@ -191,7 +198,7 @@ export default function Bilete() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Section - Original Design */}
       <section className="relative h-[70vh] md:h-[80vh] overflow-hidden">
         <div className="absolute inset-0">
@@ -203,7 +210,7 @@ export default function Bilete() {
                   activePromo === index ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                <Image 
+                <Image
                  src="/contact-hero.jpg"
                   alt="Telegondola Piatra Neamț"
                   fill
@@ -215,7 +222,7 @@ export default function Bilete() {
             ))}
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
           </div>
-          
+
           {/* Animated particles */}
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(20)].map((_, i) => (
@@ -232,7 +239,7 @@ export default function Bilete() {
             ))}
           </div>
         </div>
-        
+
         {/* Hero Content */}
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4 lg:px-8">
           {/* <div className="mb-6 animate-fade-in-down">
@@ -244,7 +251,7 @@ export default function Bilete() {
               <span className="text-white/90 text-xs font-medium tracking-wider uppercase">Deschis 365 zile pe an</span>
             </div>
           </div> */}
-          
+
           <h1 className="text-white mb-6 max-w-5xl mx-auto font-sora">
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight mb-2 animate-fade-in-up">
               Bilete online pentru
@@ -255,7 +262,7 @@ export default function Bilete() {
               </span>
             </span>
           </h1>
-          
+
           <p className="text-white/80 text-base md:text-lg lg:text-xl mb-10 max-w-2xl animate-fade-in-up animation-delay-400">
             Cumpără bilete online și bucură-te de călătorie fără să stai la coadă. <br />
             Valabile 90 de zile de la achiziție.
@@ -277,9 +284,9 @@ export default function Bilete() {
             </div>
           </div>
         </div>
-        
+
         {/* Scroll Indicator */}
-    
+
       </section>
 
       {/* Notificare Sistem În Actualizare */}
@@ -316,13 +323,13 @@ export default function Bilete() {
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          
+
           {/* Date Picker - OPTIMIZED pentru toate device-urile */}
           <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700 mb-2 text-center md:text-left">
               Alege data călătoriei (opțional)
             </label>
-            
+
             {/* Input wrapper pentru centrare perfectă */}
             <div className="flex justify-center md:justify-start">
               <input
@@ -333,12 +340,12 @@ export default function Bilete() {
                 className="w-full max-w-sm md:max-w-none px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#B7D662] focus:ring-2 focus:ring-[#B7D662]/20 transition-all text-center md:text-left"
               />
             </div>
-            
+
             <p className="text-xs text-gray-500 mt-2 text-center md:text-left">
               * Biletele sunt valabile 90 de zile de la achiziție
             </p>
           </div>
-          
+
           {/* Program Badge - RESPONSIVE */}
           <div className="w-full md:w-auto">
             <div className="bg-gradient-to-r from-[#B7D662] to-[#95b540] text-white rounded-xl p-4 md:p-5">
@@ -348,14 +355,14 @@ export default function Bilete() {
                 </svg>
                 <div className="text-center md:text-left">
                   <p className="font-semibold text-base md:text-lg">Program</p>
-                  <p className="text-xs md:text-sm text-white/90 whitespace-nowrap">
-                    L-J: 10-20 | Mi: 12-20 | V-D: 10-20 
+                  <p className="text-xs md:text-sm text-white/90">
+                    {programScurt(program)}
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -393,7 +400,7 @@ export default function Bilete() {
     SPECIAL
   </div>
 )}
-                
+
                 {/* Header with gradient */}
                 <div className={`${ticket.color} p-6 text-white`}>
                   <div className="flex items-center justify-between mb-4">
@@ -407,7 +414,7 @@ export default function Bilete() {
                   </div>
                   <h3 className="text-xl font-semibold">{ticket.name}</h3>
                 </div>
-                
+
                 {/* Features */}
                 <div className="p-6">
                   <ul className="space-y-3 mb-6">
@@ -420,7 +427,7 @@ export default function Bilete() {
                       </li>
                     ))}
                   </ul>
-                  
+
                   {/* Add button */}
                   <button
                     id={`add-${ticket.id}`}
@@ -544,7 +551,7 @@ export default function Bilete() {
               <h4 className="font-medium text-gray-900 mb-1">100% Securizat</h4>
               <p className="text-sm text-gray-600">Plăți protejate SSL</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-[#B7D662]/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <svg className="w-8 h-8 text-[#B7D662]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -554,7 +561,7 @@ export default function Bilete() {
               <h4 className="font-medium text-gray-900 mb-1">Valabil 90 zile</h4>
               <p className="text-sm text-gray-600">Flexibilitate maximă</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-[#B7D662]/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <svg className="w-8 h-8 text-[#B7D662]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -564,7 +571,7 @@ export default function Bilete() {
               <h4 className="font-medium text-gray-900 mb-1">Plată Online</h4>
               <p className="text-sm text-gray-600">Card bancar</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-[#B7D662]/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <svg className="w-8 h-8 text-[#B7D662]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -590,7 +597,7 @@ export default function Bilete() {
     />
     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
   </div>
-  
+
   {/* Content */}
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
@@ -599,12 +606,12 @@ export default function Bilete() {
         <span className="font-semibold italic text-[#B7D662]">online</span>
       </h2>
       <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-8 md:mb-12 max-w-3xl">
-        Pentru moment sistemul online este în curs de actualizare. 
+        Pentru moment sistemul online este în curs de actualizare.
         Contactează-ne pentru mai multe informații.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <a 
-          href="tel:+40724538928" 
+        <a
+          href="tel:+40724538928"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -612,8 +619,8 @@ export default function Bilete() {
           </svg>
           <span>+40 724 538 928</span>
         </a>
-        <a 
-          href="mailto:office@perlainvest.ro" 
+        <a
+          href="mailto:office@perlainvest.ro"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all"
         >
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -638,16 +645,16 @@ export default function Bilete() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              
+
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Sistemul online în curs de actualizare
               </h3>
-              
+
               <p className="text-gray-600 mb-6">
-                Pentru moment, lucrăm la îmbunătățirea sistemului nostru de rezervări online. 
+                Pentru moment, lucrăm la îmbunătățirea sistemului nostru de rezervări online.
                 Vă rugăm să achiziționați biletele:
               </p>
-              
+
               <div className="space-y-3 text-left mb-6">
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-[#B7D662] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -662,7 +669,7 @@ export default function Bilete() {
                   <span className="text-gray-700">Pentru informați sunați la <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">+40 724 538 928</a></span>
                 </div>
               </div>
-              
+
               <button
                 onClick={() => setShowUnavailableModal(false)}
                 className="w-full py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-xl transition-colors"
@@ -673,7 +680,7 @@ export default function Bilete() {
           </div>
         </div>
       )}
-      
+
       <style jsx>{`
         @keyframes float {
           0%, 100% {

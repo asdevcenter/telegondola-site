@@ -57,13 +57,13 @@ export type ConfigTelegondola = {
 
 /** Programul de rezervă — folosit doar dacă serverul nu răspunde. */
 const PROGRAM_REZERVA: ZiProgram[] = [
-  { zi: 0, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
+  { zi: 0, deschide: '10:00', inchide: '22:00', deschideMin: 600, inchideMin: 1320 },
   { zi: 1, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
   { zi: 2, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
   { zi: 3, deschide: '12:00', inchide: '20:00', deschideMin: 720, inchideMin: 1200 },
   { zi: 4, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
-  { zi: 5, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
-  { zi: 6, deschide: '10:00', inchide: '20:00', deschideMin: 600, inchideMin: 1200 },
+  { zi: 5, deschide: '10:00', inchide: '22:00', deschideMin: 600, inchideMin: 1320 },
+  { zi: 6, deschide: '10:00', inchide: '22:00', deschideMin: 600, inchideMin: 1320 },
 ]
 
 const NECUNOSCUT: ConfigTelegondola['stare'] = {
@@ -174,24 +174,73 @@ export function useTelegondola() {
  * Grupează zilele cu același interval chiar dacă nu sunt una după alta —
  * miercurea are alt program, dar lunea, marțea și joia rămân împreună.
  */
-export function programGrupat(program: ZiProgram[]) {
-  const NUME = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
-  const ordinea = [1, 2, 3, 4, 5, 6, 0] // săptămâna începe luni
+const NUME_ZILE = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+const NUME_SCURTE = ['Du', 'L', 'Ma', 'Mi', 'J', 'V', 'S']
+const ORDINEA = [1, 2, 3, 4, 5, 6, 0] // săptămâna începe luni
 
+function grupeaza(
+  program: ZiProgram[],
+  nume: string[],
+  interval: (z: ZiProgram) => string,
+) {
   const dupaInterval = new Map<string, { zile: string[]; primaZi: number }>()
 
-  ordinea.forEach((ziNr, pozitie) => {
+  ORDINEA.forEach((ziNr, pozitie) => {
     const z = program.find((p) => p.zi === ziNr)
     if (!z) return
 
-    const interval = `${z.deschide} - ${z.inchide}`
-    const grup = dupaInterval.get(interval)
+    const cheie = interval(z)
+    const grup = dupaInterval.get(cheie)
 
-    if (grup) grup.zile.push(NUME[ziNr])
-    else dupaInterval.set(interval, { zile: [NUME[ziNr]], primaZi: pozitie })
+    if (grup) grup.zile.push(nume[ziNr])
+    else dupaInterval.set(cheie, { zile: [nume[ziNr]], primaZi: pozitie })
   })
 
   return [...dupaInterval.entries()]
     .sort((a, b) => a[1].primaZi - b[1].primaZi)
-    .map(([interval, g]) => ({ zile: g.zile.join(', '), interval }))
+    .map(([cheie, g]) => ({ zile: g.zile.join(', '), interval: cheie }))
+}
+
+export function programGrupat(program: ZiProgram[]) {
+  return grupeaza(program, NUME_ZILE, (z) => `${z.deschide} - ${z.inchide}`)
+}
+
+/**
+ * Toate cele șapte zile, de luni până duminică, fiecare cu intervalul ei.
+ * `diferit` marchează zilele care ies din tiparul săptămânii — de obicei miercurea.
+ */
+export function programPeZile(program: ZiProgram[]) {
+  const cateOri = new Map<string, number>()
+
+  ORDINEA.forEach((ziNr) => {
+    const z = program.find((p) => p.zi === ziNr)
+    if (!z) return
+    const interval = `${z.deschide} - ${z.inchide}`
+    cateOri.set(interval, (cateOri.get(interval) ?? 0) + 1)
+  })
+
+  let obisnuit = ''
+  let maxim = 0
+  cateOri.forEach((n, interval) => {
+    if (n > maxim) {
+      maxim = n
+      obisnuit = interval
+    }
+  })
+
+  return ORDINEA.flatMap((ziNr) => {
+    const z = program.find((p) => p.zi === ziNr)
+    if (!z) return []
+    const interval = `${z.deschide} - ${z.inchide}`
+    return [{ zi: ziNr, nume: NUME_ZILE[ziNr], interval, diferit: interval !== obisnuit }]
+  })
+}
+
+/** „L, Ma, J: 10-20 | Mi: 12-20 | V, S, Du: 10-20" — pentru insigne și spații mici. */
+export function programScurt(program: ZiProgram[]): string {
+  const fara00 = (ora: string) => (ora.endsWith(':00') ? ora.slice(0, -3) : ora)
+
+  return grupeaza(program, NUME_SCURTE, (z) => `${fara00(z.deschide)}-${fara00(z.inchide)}`)
+    .map((r) => `${r.zile}: ${r.interval}`)
+    .join(' | ')
 }

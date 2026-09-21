@@ -4,20 +4,18 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Navigation from '../../../components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useTelegondola, programPeZile } from '../../../lib/telegondola'
 
 export default function PreturiOrar() {
   const [activeTab, setActiveTab] = useState('bilete-individuale')
   const [scrollY, setScrollY] = useState(0)
 
-  const programData = [
-    { day: 'Luni', hours: '10:00 - 20:00' },
-    { day: 'Marți', hours: '10:00 - 20:00' },
-    { day: 'Miercuri', hours: '12:00 - 20:00', special: true },
-    { day: 'Joi', hours: '10:00 - 20:00' },
-    { day: 'Vineri', hours: '10:00 - 20:00' },
-    { day: 'Sâmbătă', hours: '10:00 - 20:00' },
-    { day: 'Duminică', hours: '10:00 - 20:00' }
-  ]
+  // Programul vine de la panoul de administrare.
+  const { program, preturi, bilete } = useTelegondola()
+  const programData = programPeZile(program)
+  const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
+  const economie = (cod: string, deRezerva: number) =>
+    bilete.find((b) => b.cod === cod)?.economie ?? deRezerva
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -44,12 +42,12 @@ export default function PreturiOrar() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
 {/* Hero Section - FĂRĂ Parallax (smooth pe toate device-urile) */}
 <section className="relative h-[40vh] min-h-[350px] md:h-[50vh] md:min-h-[400px] overflow-hidden">
   {/* Image container - STATIC */}
   <div className="absolute inset-0">
-    <Image 
+    <Image
       src="/telegondola-hero-preturi.jpg"
       alt="Telegondola Piatra Neamț - Prețuri și Orar"
       fill
@@ -62,7 +60,7 @@ export default function PreturiOrar() {
     />
     <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
   </div>
-         
+
   {/* Content */}
   <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
     <div className="max-w-4xl mx-auto">
@@ -117,16 +115,16 @@ export default function PreturiOrar() {
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">Orar săptămânal</h3>
                   <div className="space-y-2 md:space-y-3">
                     {programData.map((item, index) => (
-                      <div 
-                        key={index}
+                      <div
+                        key={item.zi}
                         className={`flex justify-between items-center pb-2 md:pb-3 transition-colors hover:bg-gray-50 px-2 py-1 rounded-lg ${
                           index < programData.length - 1 ? 'border-b border-gray-100' : ''
                         }`}
                       >
-                        <span className={`font-medium text-sm md:text-base ${item.special ? 'text-[#B7D662]' : 'text-gray-700'}`}>
-                          {item.day}
+                        <span className={`font-medium text-sm md:text-base ${item.diferit ? 'text-[#B7D662]' : 'text-gray-700'}`}>
+                          {item.nume}
                         </span>
-                        <span className="text-gray-900 text-sm md:text-base">{item.hours}</span>
+                        <span className="text-gray-900 text-sm md:text-base">{item.interval}</span>
                       </div>
                     ))}
                   </div>
@@ -142,7 +140,9 @@ export default function PreturiOrar() {
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">Informații importante</h3>
                   <div className="space-y-3 md:space-y-4">
                     {[
-                      'Program diferit miercurea: 12:00 - 20:00',
+                      ...programData
+                        .filter((z) => z.diferit)
+                        .map((z) => `Program diferit ${z.nume.toLowerCase()}: ${z.interval}`),
                       'Deschis tot timpul anului în funcție de condițiile meteo',
                       'Program special de sărbători'
                     ].map((info, i) => (
@@ -182,7 +182,7 @@ export default function PreturiOrar() {
               Tarife telegondolă
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Alege tipul de bilet potrivit pentru tine. 
+              Alege tipul de bilet potrivit pentru tine.
             </p>
           </div>
 
@@ -228,11 +228,11 @@ export default function PreturiOrar() {
                   <div className="space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b border-gray-100">
                       <span className="text-sm md:text-base text-gray-600">Urcare și coborâre</span>
-                      <span className="text-xl md:text-2xl font-bold text-gray-900">60 lei</span>
+                      <span className="text-xl md:text-2xl font-bold text-gray-900">{pret('adult_dus_intors', 60)} lei</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm md:text-base text-gray-600">Urcare sau coborâre</span>
-                      <span className="text-lg md:text-xl font-semibold text-gray-900">40 lei</span>
+                      <span className="text-lg md:text-xl font-semibold text-gray-900">{pret('adult_o_cursa', 40)} lei</span>
                     </div>
                   </div>
                 </div>
@@ -250,11 +250,11 @@ export default function PreturiOrar() {
                   <div className="space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b border-gray-100">
                       <span className="text-sm md:text-base text-gray-600">Urcare și coborâre</span>
-                      <span className="text-xl md:text-2xl font-bold text-gray-900">40 lei</span>
+                      <span className="text-xl md:text-2xl font-bold text-gray-900">{pret('copil_dus_intors', 40)} lei</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm md:text-base text-gray-600">Urcare sau coborâre</span>
-                      <span className="text-lg md:text-xl font-semibold text-gray-900">30 lei</span>
+                      <span className="text-lg md:text-xl font-semibold text-gray-900">{pret('copil_o_cursa', 30)} lei</span>
                     </div>
                   </div>
                   <div className="mt-3 md:mt-4 p-2.5 md:p-3 bg-[#B7D662]/10 rounded-lg">
@@ -282,11 +282,11 @@ export default function PreturiOrar() {
                   <div className="space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b border-gray-100">
                       <span className="text-sm md:text-base text-gray-600">Adulți</span>
-                      <span className="text-xl md:text-2xl font-bold text-gray-900">40 lei</span>
+                      <span className="text-xl md:text-2xl font-bold text-gray-900">{pret('grup20_adult', 40)} lei</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm md:text-base text-gray-600">Copii 5-14 ani</span>
-                      <span className="text-lg md:text-xl font-semibold text-gray-900">25 lei</span>
+                      <span className="text-lg md:text-xl font-semibold text-gray-900">{pret('grup20_copil', 25)} lei</span>
                     </div>
                   </div>
                   <div className="mt-3 md:mt-4 p-2.5 md:p-3 bg-green-50 rounded-lg">
@@ -309,11 +309,11 @@ export default function PreturiOrar() {
                   <div className="space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b border-gray-100">
                       <span className="text-sm md:text-base text-gray-600">Adulți</span>
-                      <span className="text-xl md:text-2xl font-bold text-gray-900">30 lei</span>
+                      <span className="text-xl md:text-2xl font-bold text-gray-900">{pret('grup100_adult', 30)} lei</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm md:text-base text-gray-600">Copii 5-14 ani</span>
-                      <span className="text-lg md:text-xl font-semibold text-gray-900">20 lei</span>
+                      <span className="text-lg md:text-xl font-semibold text-gray-900">{pret('grup100_copil', 20)} lei</span>
                     </div>
                   </div>
                   <div className="mt-3 md:mt-4 p-2.5 md:p-3 bg-[#B7D662]/10 rounded-lg">
@@ -329,11 +329,14 @@ export default function PreturiOrar() {
             {activeTab === 'abonamente' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 animate-fade-in-up">
                 {[
-                  { title: '5 călătorii adulți', price: '100', original: '125' },
-                  { title: '5 călătorii copii', price: '50', original: '100' },
-                  { title: '10 călătorii adulți', price: '150', original: '250', highlight: true },
-                  { title: '10 călătorii copii', price: '100', original: '200' }
-                ].map((abo, i) => (
+                  { cod: 'abonament_5_adult', title: '5 călătorii adulți', pretRezerva: 100, economieRezerva: 100 },
+                  { cod: 'abonament_5_copil', title: '5 călătorii copii', pretRezerva: 50, economieRezerva: 100 },
+                  { cod: 'abonament_10_adult', title: '10 călătorii adulți', pretRezerva: 150, economieRezerva: 250, highlight: true },
+                  { cod: 'abonament_10_copil', title: '10 călătorii copii', pretRezerva: 100, economieRezerva: 200 }
+                ].map((a) => {
+                  const p = pret(a.cod, a.pretRezerva)
+                  return { ...a, price: p, original: p + economie(a.cod, a.economieRezerva) }
+                }).map((abo, i) => (
                   <div key={i} className={`bg-white rounded-2xl p-5 md:p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 ${abo.highlight ? 'border-2 border-[#B7D662] relative' : ''}`}>
                     {abo.highlight && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -375,11 +378,11 @@ export default function PreturiOrar() {
                       <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
                         <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
                           <span className="text-sm md:text-base text-gray-700">Adulți</span>
-                          <span className="text-xl md:text-2xl font-bold text-blue-600">25 lei</span>
+                          <span className="text-xl md:text-2xl font-bold text-blue-600">{pret('localnic_adult', 25)} lei</span>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
                           <span className="text-sm md:text-base text-gray-700">Copii 5-14 ani</span>
-                          <span className="text-xl md:text-2xl font-bold text-blue-600">15 lei</span>
+                          <span className="text-xl md:text-2xl font-bold text-blue-600">{pret('localnic_copil', 15)} lei</span>
                         </div>
                       </div>
                       <p className="text-xs md:text-sm text-gray-600 mt-3">
@@ -482,7 +485,7 @@ export default function PreturiOrar() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8 text-center">
                 Contact
               </h2>
-              
+
               <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
                 <a href="tel:+40724538928" className="flex items-start gap-3 md:gap-4 group">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[#B7D662]/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#B7D662]/30 transition-colors">
@@ -535,9 +538,9 @@ export default function PreturiOrar() {
           </div>
         </div>
       </section>
-      
+
       <Footer />
-      
+
       <style jsx>{`
         @keyframes fade-in-up {
           from {

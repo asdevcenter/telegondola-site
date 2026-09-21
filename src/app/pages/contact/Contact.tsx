@@ -4,9 +4,13 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Navigation from '../../../components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useTelegondola, programGrupat } from '../../../lib/telegondola'
 
 export default function Contact() {
   const [activeTab, setActiveTab] = useState('info')
+
+  // Programul vine de la panoul de administrare.
+  const { program } = useTelegondola()
 
   const contactInfo = [
     {
@@ -54,11 +58,7 @@ export default function Contact() {
         </svg>
       ),
       title: 'Program',
-      details: [
-        'Luni, Marți, Joi: 10:00 - 20:00',
-        'Miercuri: 12:00 - 20:00',
-        'Vineri, Sâmbătă, Duminică: 10:00 - 20:00'
-      ]
+      details: programGrupat(program).map((r) => `${r.zile}: ${r.interval}`)
     }
   ]
 
@@ -88,11 +88,11 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
  {/* Hero Section */}
 <section className="relative h-[40vh] min-h-[350px] md:h-[50vh] md:min-h-[400px] overflow-hidden">
   <div className="absolute inset-0">
-    <Image 
+    <Image
       src="/contact-hero.jpg"
       alt="Contact Telegondola Piatra Neamț"
       fill
@@ -103,7 +103,7 @@ export default function Contact() {
     />
     <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
   </div>
-         
+
   <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 animate-fade-in-up">
@@ -199,7 +199,7 @@ export default function Contact() {
             </button>
           </div>
 
-   
+
 
 {/* Tab Content */}
 {activeTab === 'info' && (
@@ -209,7 +209,7 @@ export default function Contact() {
       <h2 className="text-3xl font-bold text-gray-900 mb-8">
         Suntem aici pentru tine
       </h2>
-      
+
       {contactInfo.map((info, index) => (
         <div
           key={index}
@@ -231,12 +231,12 @@ export default function Contact() {
                 <p key={i} className="text-gray-600 mb-1">{detail}</p>
               ))}
               {info.action && (
-                <a 
+                <a
                   href={info.action}
                   target={info.action.startsWith('http') ? '_blank' : undefined}
                   rel={info.action.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className={`inline-flex items-center gap-2 mt-3 font-medium transition-colors ${
-                    info.primary 
+                    info.primary
                       ? 'text-[#B7D662] hover:text-[#95b540]'
                       : 'text-gray-700 hover:text-[#B7D662]'
                   }`}
@@ -268,7 +268,7 @@ export default function Contact() {
               <p className="text-sm text-gray-500">Se încarcă harta...</p>
             </div>
           </div>
-          
+
           {/* Iframe */}
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2724.753590981863!2d26.3615745!3d46.9272262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473555c641748c49%3A0x67376e9d1e54a160!2sTelegondol%C4%83%20-%20sta%C8%9Bie%20plecare%20-%20Piatra%20Neam%C8%9B!5e0!3m2!1sro!2sro!4v1761310671097!5m2!1sro!2sro"
@@ -282,10 +282,10 @@ export default function Contact() {
             title="Locația Telegondola Piatra Neamț"
           />
         </div>
-        
+
         {/* Fallback link */}
         <div className="mt-3 text-center">
-          <a 
+          <a
             href="https://maps.app.goo.gl/wA93S4whTgT3STtZ8"
             target="_blank"
             rel="noopener noreferrer"
@@ -434,7 +434,7 @@ export default function Contact() {
     />
     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
   </div>
-  
+
   {/* Content */}
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
@@ -446,7 +446,7 @@ export default function Contact() {
         Suntem aici pentru orice întrebare sau informație de care ai nevoie.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <a 
+        <a
           href="/pages/tickets"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
@@ -455,7 +455,7 @@ export default function Contact() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
-        <a 
+        <a
           href="tel:+40724538928"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all"
         >
@@ -468,9 +468,9 @@ export default function Contact() {
     </div>
   </div>
 </section>
-      
+
       <Footer />
-      
+
       <style jsx>{`
         @keyframes fade-in-up {
           from {

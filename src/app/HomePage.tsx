@@ -7,14 +7,14 @@ import Navigation from '../components/Navigation'
 import Footer from '../components/layout/Footer'
 import { useTelegondola, programGrupat } from '../lib/telegondola'
 
-const sora = Sora({ 
+const sora = Sora({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-sora',
   display: 'swap',
 })
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
   variable: '--font-inter',
@@ -22,62 +22,16 @@ const inter = Inter({
 })
 
 export default function Home() {
-  // ============================================================================
-  // CONTROL EXCEPȚII - Pune true când vrei să închizi forțat (vânt, mentenanță)
-  // ============================================================================
-  const manualClosed = false  // SCHIMBĂ ÎN true PENTRU ÎNCHIDERE EXCEPȚIONALĂ
-  const exceptionMessage = ''
+  // Programul și starea vin de la panoul de administrare.
+  // Nu se mai scriu aici: se modifică din admin și apar în cel mult un minut.
+  const { gata, stare, program, preturi } = useTelegondola()
+  const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
+  const isOpen = stare.deschis
+  const announcement = stare.mesaj
 
-  // STATE-URI
   const [scrolled, setScrolled] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  const [isOpen, setIsOpen] = useState(false)
-  const [announcement, setAnnouncement] = useState<string | null>(null)
-
-  // PROGRAM REGULAT - Actualizează aici când se schimbă orarul
-  const schedule = {
-    0: { start: 10, end: 20 }, // Duminică: 10:00 - 18:00
-    1: { start: 10, end: 20 }, // Luni: 10:00 - 18:00
-    2: { start: 10, end: 20 }, // Marți: 10:00 - 18:00
-    3: { start: 12, end: 20 }, // Miercuri: 12:00 - 18:00
-    4: { start: 10, end: 20 }, // Joi: 10:00 - 18:00
-    5: { start: 10, end: 20 }, // Vineri: 10:00 - 18:00
-    6: { start: 10, end: 20 }, // Sâmbătă: 10:00 - 18:00
-  }
-
-  // LOGICA PRINCIPALĂ
-  useEffect(() => {
-    const checkStatus = () => {
-      // PRIORITATE 1: ÎNCHIDERE EXCEPȚIONALĂ (vânt, mentenanță, etc.)
-      if (manualClosed) {
-        setIsOpen(false)
-        setAnnouncement(exceptionMessage)
-        return
-      }
-
-      // PRIORITATE 2: VERIFICĂ PROGRAMUL AUTOMAT
-      const now = new Date()
-      const day = now.getDay()
-      const hour = now.getHours()
-      const minute = now.getMinutes()
-      const currentTime = hour * 60 + minute
-
-      const todaySchedule = schedule[day as keyof typeof schedule]
-      const startTime = todaySchedule.start * 60
-      const endTime = todaySchedule.end * 60
-
-      // Verifică dacă suntem în intervalul programului
-      const isInSchedule = currentTime >= startTime && currentTime < endTime
-      
-      setIsOpen(isInSchedule)
-      setAnnouncement(null) // Fără mesaj când funcționează normal
-    }
-
-    checkStatus()
-    const interval = setInterval(checkStatus, 60000) // Verifică la fiecare minut
-    return () => clearInterval(interval)
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,7 +68,7 @@ export default function Home() {
           currentSlide === index ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <Image 
+        <Image
           src={`/hero-telegondola-${index + 1}.jpg`}
           alt={`Telegondola Piatra Neamț ${index + 1}`}
           fill
@@ -125,11 +79,11 @@ export default function Home() {
       </div>
     ))}
   </div>
-        
+
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
-        
+
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4 lg:px-8">
-          <div className="mb-6 animate-fade-in-down">
+          <div className={`mb-6 animate-fade-in-down transition-opacity ${gata ? 'opacity-100' : 'opacity-0'}`}>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2">
               <span className="relative flex h-2 w-2">
                 {isOpen && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B7D662] opacity-75"></span>}
@@ -140,8 +94,8 @@ export default function Home() {
               </span>
             </div>
           </div>
-          
-       
+
+
           {announcement && (
             <div className="mb-4 animate-fade-in-down animation-delay-200">
               <div className="inline-block bg-red-500/90 backdrop-blur-sm border border-red-400/30 rounded-lg px-4 py-2 max-w-md">
@@ -157,7 +111,7 @@ export default function Home() {
 </div>
   </div>
 )} */}
-          
+
           <h1 className="text-white mb-6 max-w-5xl mx-auto font-sora">
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-4 animate-fade-in-up drop-shadow-2xl">
               Descoperă orașul Piatra-Neamț
@@ -166,11 +120,11 @@ export default function Home() {
               de la înălțime
             </span>
           </h1>
-          
+
           <p className="text-white text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl animate-fade-in-up animation-delay-400 drop-shadow-lg font-medium">
-            O experiență unică la 632m altitudine • Panoramă 360° asupra orașului 
+            O experiență unică la 632m altitudine • Panoramă 360° asupra orașului
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-600">
             <a href="/pages/despre-noi" className="group inline-flex items-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-8 rounded-full text-base transition-all shadow-lg hover:shadow-xl">
               <span>Despre Noi</span>
@@ -178,7 +132,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            
+
             <a href="/pages/galerie" className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-full transition-all">
               <div className="relative w-8 h-8 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +168,7 @@ export default function Home() {
         </div>
         {/* Badge Cazare — Cozla Panoramic View */}
 
-        
+
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-fade-in-up animation-delay-800">
           <div className="w-5 h-8 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-1 bg-white rounded-full mt-1.5 animate-scroll-down"></div>
@@ -227,8 +181,8 @@ export default function Home() {
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`w-8 h-1 rounded-full transition-all duration-500 ${
-                currentSlide === index 
-                  ? 'bg-[#B7D662] w-12' 
+                currentSlide === index
+                  ? 'bg-[#B7D662] w-12'
                   : 'bg-white/30 hover:bg-white/50'
               }`}
             />
@@ -271,7 +225,7 @@ export default function Home() {
               Alege varianta potrivită și bucură-te de o experiență de neuitat
             </p>
           </div>
-          
+
           <div className="max-w-5xl mx-auto">
             {/* Main Tickets Grid */}
             <div className="grid md:grid-cols-4 gap-6 lg:gap-6 mb-8">
@@ -283,7 +237,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">Adulți</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">60<span className="text-lg text-gray-500"> lei</span></div>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_dus_intors', 60)}<span className="text-lg text-gray-500"> lei</span></div>
                 <p className="text-sm text-gray-500 mb-4">Dus-întors</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,7 +255,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">Adulți</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">40<span className="text-lg text-gray-500"> lei</span></div>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_o_cursa', 40)}<span className="text-lg text-gray-500"> lei</span></div>
                 <p className="text-sm text-gray-500 mb-4">Urcare/Coborâre</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,7 +273,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-medium mb-1 text-gray-900">Copii (5-14 ani)</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">40<span className="text-lg text-gray-500"> lei</span></div>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_dus_intors', 40)}<span className="text-lg text-gray-500"> lei</span></div>
                 <p className="text-sm text-gray-500 mb-4">Dus-întors</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -337,7 +291,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-medium mb-1 text-gray-900">Copii (5-14 ani)</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">30<span className="text-lg text-gray-500"> lei</span></div>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_o_cursa', 30)}<span className="text-lg text-gray-500"> lei</span></div>
                 <p className="text-sm text-gray-500 mb-4">Urcare/Coborâre</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -360,11 +314,11 @@ export default function Home() {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Adulți (dus-întors)</span>
-                    <span className="font-semibold text-xl">40 lei</span>
+                    <span className="font-semibold text-xl">{pret('grup20_adult', 40)} lei</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Copii 5-14 ani</span>
-                    <span className="font-semibold text-xl">25 lei</span>
+                    <span className="font-semibold text-xl">{pret('grup20_copil', 25)} lei</span>
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 bg-[#B7D662]/10 p-3 rounded-lg">
@@ -382,11 +336,11 @@ export default function Home() {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Adulți (dus-întors)</span>
-                    <span className="font-semibold text-xl">30 lei</span>
+                    <span className="font-semibold text-xl">{pret('grup100_adult', 30)} lei</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Copii 5-14 ani</span>
-                    <span className="font-semibold text-xl">20 lei</span>
+                    <span className="font-semibold text-xl">{pret('grup100_copil', 20)} lei</span>
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 bg-[#B7D662]/10 p-3 rounded-lg">
@@ -400,19 +354,19 @@ export default function Home() {
               <h3 className="text-2xl font-sora font-semibold mb-6">Abonamente</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">100 lei</div>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_adult', 100)} lei</div>
                   <p className="text-white/80 text-sm">5 călătorii adulți</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">50 lei</div>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_copil', 50)} lei</div>
                   <p className="text-white/80 text-sm">5 călătorii copii</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">150 lei</div>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_adult', 150)} lei</div>
                   <p className="text-white/80 text-sm">10 călătorii adulți</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">100 lei</div>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_copil', 100)} lei</div>
                   <p className="text-white/80 text-sm">10 călătorii copii</p>
                 </div>
               </div>
@@ -431,23 +385,12 @@ export default function Home() {
                   <h3 className="text-xl font-medium text-gray-900">Program de funcționare</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Luni, Marți, Joi</span>
-                    <span className="font-medium text-gray-900">10:00 - 20:00</span>
-                  </div>
-                        <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Miercuri</span>
-                    <span className="font-medium text-gray-900">12:00 - 20:00</span>
-                  </div>
-                   <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Vineri, Sâmbătă, Duminică</span>
-                    <span className="font-medium text-gray-900">10:00 - 20:00</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                  
-                 
-            
-                  </div>
+                  {programGrupat(program).map((r) => (
+                    <div key={r.interval} className="flex justify-between items-center pb-3 border-b border-gray-100 last:border-0">
+                      <span className="text-gray-600">{r.zile}</span>
+                      <span className="font-medium text-gray-900">{r.interval}</span>
+                    </div>
+                  ))}
                 </div>
                 <div className="mt-6 p-3 bg-[#B7D662]/10 rounded-lg">
                   <p className="text-sm text-gray-700">Deschis 365 zile pe an!</p>
@@ -466,7 +409,7 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900 mb-1">Cetățeni Piatra-Neamț</p>
-                    <p className="text-sm text-gray-600">25 lei adulți / 15 lei copii</p>
+                    <p className="text-sm text-gray-600">{pret('localnic_adult', 25)} lei adulți / {pret('localnic_copil', 15)} lei copii</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900 mb-1">Persoane cu dizabilități</p>
@@ -496,7 +439,7 @@ export default function Home() {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-white rounded-full"></div>
     </div>
   </div>
-  
+
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="grid lg:grid-cols-2 gap-12 items-center">
       <div className="space-y-6">
@@ -512,10 +455,10 @@ export default function Home() {
               </div>
               <h4 className="font-semibold text-xl mb-2 text-gray-900">Stația de plecare</h4>
               <p className="text-gray-600 mb-4">Piața Gării 7</p>
-              <a 
-                href="https://maps.app.goo.gl/wA93S4whTgT3STtZ8" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://maps.app.goo.gl/wA93S4whTgT3STtZ8"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#B7D662] hover:bg-[#a5c550] text-white px-5 py-2.5 rounded-full transition font-medium shadow-md hover:shadow-lg"
               >
                 Direcții
@@ -576,7 +519,7 @@ export default function Home() {
               <p className="text-sm text-gray-500">Se încarcă harta...</p>
             </div>
           </div>
-          
+
           {/* Iframe Google Maps - OPTIMIZED */}
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2724.753590981863!2d26.3615745!3d46.9272262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473555c641748c49%3A0x67376e9d1e54a160!2sTelegondol%C4%83%20-%20sta%C8%9Bie%20plecare%20-%20Piatra%20Neam%C8%9B!5e0!3m2!1sro!2sro!4v1761296944318!5m2!1sro!2sro"
@@ -590,10 +533,10 @@ export default function Home() {
             className="absolute inset-0"
           />
         </div>
-        
+
         {/* Fallback button dacă iframe nu se încarcă */}
         <div className="mt-3 text-center">
-          <a 
+          <a
             href="https://maps.app.goo.gl/wA93S4whTgT3STtZ8"
             target="_blank"
             rel="noopener noreferrer"
@@ -621,7 +564,7 @@ export default function Home() {
         Imagini din călătorie
       </p>
     </div>
-     
+
     <div className="max-w-6xl mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[180px] lg:auto-rows-[200px]">
         {[
@@ -652,10 +595,10 @@ export default function Home() {
           </div>
         ))}
       </div>
-       
+
       <div className="text-center mt-12">
-        <a 
-          href="/pages/galerie" 
+        <a
+          href="/pages/galerie"
           className="group inline-flex items-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-medium py-4 px-8 rounded-full transition-all transform hover:scale-105"
         >
           <span>Vezi întreaga galerie</span>
@@ -684,7 +627,7 @@ export default function Home() {
     />
     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
   </div>
-  
+
   {/* Content */}
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
@@ -693,11 +636,11 @@ export default function Home() {
         <span className="font-semibold italic">tuturor așteptărilor</span>
       </h2>
       <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl">
-        Descoperă Piatra Neamț dintr-o perspectivă unică. 
+        Descoperă Piatra Neamț dintr-o perspectivă unică.
       </p>
       <div className="flex flex-col sm:flex-row gap-4">
-        <a 
-          href="/pages/galerie" 
+        <a
+          href="/pages/galerie"
           className="inline-flex items-center justify-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-4 px-10 rounded-full text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
           <span>Descoperă</span>
@@ -705,8 +648,8 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
-        <a 
-          href="/pages/tickets" 
+        <a
+          href="/pages/tickets"
           className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-4 px-10 rounded-full text-lg transition-all"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -722,7 +665,7 @@ export default function Home() {
 
       {/* Footer Component */}
       <Footer />
-      
+
 
       <style jsx>{`
         @keyframes fade-in-up {
@@ -789,20 +732,20 @@ export default function Home() {
           animation-delay: 800ms;
         }
       `}</style>
-      
+
       <style jsx global>{`
         .font-sora {
           font-family: var(--font-sora);
         }
-        
+
         .font-inter {
           font-family: var(--font-inter);
         }
-        
+
         body {
           font-family: var(--font-inter);
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
           font-family: var(--font-sora);
         }
