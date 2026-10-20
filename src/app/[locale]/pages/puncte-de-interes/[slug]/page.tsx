@@ -1,6 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import Atractie from './Atractie'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
+import { metadatePagina } from '@/src/lib/seo'
 
 // Lista COMPLETĂ cu toate slug-urile
 const validSlugs = [
@@ -48,6 +50,17 @@ export async function generateStaticParams() {
 }
 
 export const dynamicParams = false
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params
+  const t = await getTranslations({ locale, namespace: `atractii.${slug}` })
+  return metadatePagina({
+    limba: locale,
+    cale: `/pages/puncte-de-interes/${slug}`,
+    titlu: t('nume'),
+    descriere: t('descriere'),
+  })
+}
 
 export default async function Page({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params

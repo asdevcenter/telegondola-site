@@ -296,12 +296,15 @@ export default function DespreNoi() {
                 key={index}
                 onClick={() => setActiveValue(index)}
                 aria-label={coreValues[index].title}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  activeValue === index 
-                    ? 'bg-white w-8' 
-                    : 'bg-white/50'
-                }`}
-              />
+                className="p-3 -m-1.5 flex items-center justify-center"
+              >
+                {/* punctul rămâne mic, dar zona de atingere are 32 px */}
+                <span
+                  className={`block h-2 rounded-full transition-all duration-300 ${
+                    activeValue === index ? 'bg-white w-8' : 'bg-white/50 w-2'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
@@ -483,7 +486,7 @@ export default function DespreNoi() {
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
                     <div className="text-2xl md:text-4xl font-bold text-green-600 mb-1 md:mb-2">{stat.value}</div>
-                    <div className="text-gray-600 text-xs md:text-base">{stat.label}</div>
+                    <div className="text-gray-600 text-xs md:text-base break-words hyphens-auto [overflow-wrap:anywhere]">{stat.label}</div>
                   </div>
                 ))}
               </div>

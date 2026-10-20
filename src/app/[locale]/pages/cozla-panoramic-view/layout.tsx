@@ -1,33 +1,12 @@
-import type { Metadata } from 'next'
-import { createPageMetadata, createBreadcrumbSchema, createFAQSchema } from '@/src/lib/metadata'
+import { createBreadcrumbSchema, createFAQSchema } from '@/src/lib/metadata'
+import { metadateDinMesaje } from '@/src/lib/seo'
 
 const SITE_URL = 'https://telegondolapiatraneamt.ro'
 const PAGE_PATH = '/pages/cozla-panoramic-view'
 
-export const metadata: Metadata = createPageMetadata({
-  title: 'Cozla Panoramic View | Cazare pe Dealul Cozla, Piatra-Neamț',
-  description:
-    'Cazare la Cozla Panoramic View, pe Dealul Cozla din Piatra-Neamț. 7 camere, terasă, vedere spre lacul Bâtca Doamnei și acces cu telegondola. Tarif: 200 lei/cameră/noapte.',
-  path: PAGE_PATH,
-  keywords: [
-    'cazare piatra neamt',
-    'cazare cozla',
-    'cazare dealul cozla',
-    'cozla panoramic view',
-    'cazare platforma belvedere',
-    'cazare varf cozla',
-    'pensiune piatra neamt',
-    'camere piatra neamt',
-    'cazare cu vedere panoramica piatra neamt',
-    'unde dorm in piatra neamt',
-    'cazare langa telegondola',
-    'cazare batca doamnei',
-    'cazare munte neamt',
-    'cazare ieftina piatra neamt',
-    'rezervare cazare piatra neamt',
-  ],
-  image: `${SITE_URL}/cozla/hero_cozla_panoramic_view.png`,
-})
+export function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  return metadateDinMesaje(params, 'cozla', PAGE_PATH, `${SITE_URL}/cozla/hero_cozla_panoramic_view.png`, true)
+}
 
 /* Schema.org: unitatea de cazare ca entitate proprie, legată de telegondolă */
 const lodgingSchema = {
@@ -134,25 +113,34 @@ const faqSchema = createFAQSchema([
   },
 ])
 
-export default function CozlaPanoramicViewLayout({
+export default async function CozlaPanoramicViewLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }) {
+  // Întrebările și traseul de navigare sunt scrise în română: le punem doar pe pagina în română.
+  const { locale } = await params
+  const ro = locale === 'ro'
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(lodgingSchema) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      {ro && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+      )}
+      {ro && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       {children}
     </>
   )

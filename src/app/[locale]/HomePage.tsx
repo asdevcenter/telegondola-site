@@ -103,7 +103,11 @@ export default function Home() {
           {announcement && (
             <div className="mb-4 animate-fade-in-down animation-delay-200">
               <div className="inline-block bg-red-500/90 backdrop-blur-sm border border-red-400/30 rounded-lg px-4 py-2 max-w-md">
-                <p className="text-white text-sm font-medium">{announcement}</p>
+                {/* Anunțul vine din admin doar în română; în celelalte limbi spunem asta înainte. */}
+                {limba !== 'ro' && (
+                  <p className="text-white/80 text-xs font-semibold mb-0.5">{t('anuntRo')}</p>
+                )}
+                <p className="text-white text-sm font-medium" lang="ro">{announcement}</p>
               </div>
             </div>
           )}
@@ -157,7 +161,7 @@ export default function Home() {
       </svg>
     </span>
     <span className="text-left leading-tight">
-      <span className="block text-[10px] font-semibold text-[#B7D662] tracking-[0.15em] uppercase">
+      <span className="block text-[11px] font-semibold text-[#B7D662] tracking-[0.15em] uppercase">
         {t('cazare')}
       </span>
       <span className="block text-sm md:text-base font-medium text-white">

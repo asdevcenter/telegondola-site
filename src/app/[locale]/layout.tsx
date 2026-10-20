@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import '../globals.css'
 import CookieConsent from '@/src/components/CookieConsent'
 import { defaultMetadata, organizationSchema } from '@/src/lib/metadata'
@@ -10,7 +10,22 @@ import { LIMBI_PUBLICATE, routing } from '@/src/i18n/routing'
 
 const inter = Inter({ subsets: ['latin', 'latin-ext'] })
 
-export const metadata: Metadata = defaultMetadata
+// Titlul și descrierea implicite, în limba paginii. Paginile își pun apoi propriile valori.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'meta.site' })
+  return {
+    ...defaultMetadata,
+    title: { default: t('titlu'), template: '%s | Telegondola Piatra Neamț' },
+    description: t('descriere'),
+    openGraph: { ...defaultMetadata.openGraph, title: t('titlu'), description: t('descriere') },
+    twitter: { ...defaultMetadata.twitter, title: t('titlu'), description: t('descriere') },
+  }
+}
 
 // Se generează doar limbile gata traduse; orice altceva dă 404.
 export function generateStaticParams() {

@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cuvintele foarte lungi (mai ales în germană) se despart pe rând în loc să iasă din ecran pe telefon. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  p, li, dd, dt, label, button, a {
+    overflow-wrap: break-word;
+  }
+}
+
 /* Animation delays */
 .animation-delay-200 {
   animation-delay: 200ms;

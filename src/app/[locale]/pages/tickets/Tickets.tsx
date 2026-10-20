@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useTranslations, useLocale } from 'next-intl'
 import { useTelegondola, programScurt } from '@/src/lib/telegondola'
 
 // Pozițiile particulelor din imaginea de sus. Sunt fixe (nu Math.random),
@@ -23,6 +24,9 @@ const PARTICULE = (() => {
 })()
 
 export default function Bilete() {
+  const t = useTranslations('pagini.Tickets')
+  const limba = useLocale()
+  const tf = useTranslations('bilete')
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
   const [activePromo, setActivePromo] = useState(0)
@@ -39,82 +43,82 @@ export default function Bilete() {
   const ticketTypes = [
     {
       id: 'adult',
-      name: 'Adulți',
+      name: t('t01'),
       price: pret('adult_dus_intors', 60),
-      description: 'Urcare și coborâre',
+      description: t('t02'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
         </svg>
       ),
-      features: ['Călătorie completă', 'Valabil 90 zile', 'Poate fi reprogramat'],
+      features: [tf('completa'), tf('valabil'), tf('reprogramat')],
       color: 'bg-gradient-to-br from-gray-800 to-gray-600'
     },
     {
       id: 'adult-single',
-      name: 'Adulți (o cursă)',
+      name: t('t03'),
       price: pret('adult_o_cursa', 40),
-      description: 'Urcare sau coborâre',
+      description: t('t04'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
         </svg>
       ),
-      features: ['O singură cursă', 'Urcare SAU coborâre', 'Valabil 90 zile'],
+      features: [tf('oCursa'), tf('urcareSau'), tf('valabil')],
       color: 'bg-gradient-to-br from-gray-700 to-gray-500'
     },
     {
       id: 'copil',
-      name: 'Copii (5-14 ani)',
+      name: t('t05'),
       price: pret('copil_dus_intors', 40),
-      description: 'Urcare și coborâre',
+      description: t('t06'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ),
-      features: ['Copii sub 5 ani gratuit', 'Călătorie completă', 'Valabil 90 zile'],
+      features: [tf('sub5'), tf('completa'), tf('valabil')],
       color: 'bg-gradient-to-br from-[#B7D662] to-[#95b540]',
       popular: true
     },
     {
       id: 'copil-single',
-      name: 'Copii (o cursă)',
+      name: t('t07'),
       price: pret('copil_o_cursa', 30),
-      description: 'Urcare sau coborâre',
+      description: t('t08'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ),
-      features: ['5-14 ani', 'O singură cursă', 'Valabil 90 zile'],
+      features: [tf('varsta'), tf('oCursa'), tf('valabil')],
       color: 'bg-gradient-to-br from-[#a5c550] to-[#8fa540]'
     },
     {
       id: 'local-adult',
-      name: 'Localnici - adulți',
+      name: t('t09'),
       price: pret('localnic_adult', 25),
-      description: 'Urcare și coborâre',
+      description: t('t10'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
         </svg>
       ),
-      features: ['Pentru cetățenii Piatra Neamț*', 'Și localitățile limitrofe**', 'Cu act de identitate'],
+      features: [tf('cetateni'), tf('limitrofe'), tf('act')],
       color: 'bg-gradient-to-br from-blue-600 to-blue-400',
       special: true
     },
     {
       id: 'local-copil',
-      name: 'Localnici - copii',
+      name: t('t11'),
       price: pret('localnic_copil', 15),
-      description: 'Urcare și coborâre',
+      description: t('t12'),
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
         </svg>
       ),
-      features: ['Pentru copii 5-14 ani', 'Din Piatra Neamț și zone limitrofe', 'Cu act identitate părinte'],
+      features: [tf('copii514'), tf('dinPN'), tf('actParinte')],
       color: 'bg-gradient-to-br from-blue-500 to-blue-300'
     }
   ]
@@ -123,18 +127,18 @@ export default function Bilete() {
   const specialOffers = [
     {
       id: 'grup20',
-      name: 'Grup 20+ persoane',
-      description: 'Tarif redus pentru grupuri',
-      price: `${pret('grup20_adult', 40)} lei adulți / ${pret('grup20_copil', 25)} lei copii`,
-      features: ['1 însoțitor gratuit la 20 persoane', 'Urcare și coborâre'],
+      name: t('t13'),
+      description: t('t14'),
+      price: tf('pretGrup', { adult: pret('grup20_adult', 40), copil: pret('grup20_copil', 25) }),
+      features: [tf('insotitor'), tf('urcareSi')],
 
     },
     {
       id: 'grup100',
-      name: 'Grup 100+ persoane',
-      description: 'Mega reducere pentru grupuri mari',
-      price: `${pret('grup100_adult', 30)} lei adulți / ${pret('grup100_copil', 20)} lei copii`,
-      features: ['1 însoțitor gratuit la 20 persoane', 'Urcare și coborâre'],
+      name: t('t15'),
+      description: t('t16'),
+      price: tf('pretGrup', { adult: pret('grup100_adult', 30), copil: pret('grup100_copil', 20) }),
+      features: [tf('insotitor'), tf('urcareSi')],
 
       highlight: true
     }
@@ -144,33 +148,33 @@ export default function Bilete() {
   const subscriptions = [
     {
       id: 'abo5adult',
-      name: '5 călătorii Adulți',
+      name: t('t17'),
       price: pret('abonament_5_adult', 100),
-      description: '1 călătorie = urcare SAU coborâre',
+      description: t('t18'),
       savings: economie('abonament_5_adult', 100),
       color: 'from-orange-500 to-orange-400'
     },
     {
       id: 'abo5copil',
-      name: '5 călătorii Copii',
+      name: t('t19'),
       price: pret('abonament_5_copil', 50),
-      description: '1 călătorie = urcare SAU coborâre',
+      description: t('t20'),
       savings: economie('abonament_5_copil', 100),
       color: 'from-pink-500 to-pink-400'
     },
     {
       id: 'abo10adult',
-      name: '10 călătorii Adulți',
+      name: t('t21'),
       price: pret('abonament_10_adult', 150),
-      description: '1 călătorie = urcare SAU coborâre',
+      description: t('t22'),
       savings: economie('abonament_10_adult', 250),
       color: 'from-purple-500 to-purple-400'
     },
     {
       id: 'abo10copil',
-      name: '10 călătorii Copii',
+      name: t('t23'),
       price: pret('abonament_10_copil', 100),
-      description: '1 călătorie = urcare SAU coborâre',
+      description: t('t24'),
       savings: economie('abonament_10_copil', 200),
       color: 'from-indigo-500 to-indigo-400'
     }
@@ -228,7 +232,7 @@ export default function Bilete() {
               >
                 <Image
                  src="/contact-hero.jpg"
-                  alt="Telegondola Piatra Neamț"
+                  alt={t('t25')}
                   fill
                   className="object-cover"
                   priority={index === 0}
@@ -268,35 +272,34 @@ export default function Bilete() {
             </div>
           </div> */}
 
-          <h1 className="text-white mb-6 max-w-5xl mx-auto font-sora">
-            <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight mb-2 animate-fade-in-up">
-              Bilete online pentru
-            </span>
-            <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold animate-fade-in-up animation-delay-200">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B7D662] to-[#95b540]">
-               telegondolă
-              </span>
-            </span>
-          </h1>
+          <h1 className="text-white mb-6 max-w-5xl mx-auto font-sora">{t.rich('t26', {
+              span1: chunks => <span
+                className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight mb-2 animate-fade-in-up">{chunks}</span>,
 
-          <p className="text-white/80 text-base md:text-lg lg:text-xl mb-10 max-w-2xl animate-fade-in-up animation-delay-400">
-            Cumpără bilete online și bucură-te de călătorie fără să stai la coadă. <br />
-            Valabile 90 de zile de la achiziție.
-          </p>
+              span2: chunks => <span
+                className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold animate-fade-in-up animation-delay-200">{chunks}</span>,
+
+              span3: chunks => <span
+                className="text-transparent bg-clip-text bg-gradient-to-r from-[#B7D662] to-[#95b540]">{chunks}</span>
+            })}</h1>
+
+          <p className="text-white/80 text-base md:text-lg lg:text-xl mb-10 max-w-2xl animate-fade-in-up animation-delay-400">{t.rich('t27', {
+              br: () => <br />
+            })}</p>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-8 md:gap-16 animate-fade-in-up animation-delay-600">
+          <div className="grid grid-cols-3 gap-3 min-[400px]:gap-8 md:gap-16 animate-fade-in-up animation-delay-600">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[#B7D662]">1915 m</div>
-              <div className="text-xs md:text-sm text-white/70">Lungime traseu</div>
+              <div className="text-xl min-[400px]:text-2xl md:text-3xl font-bold text-[#B7D662] whitespace-nowrap">{t('t28')}</div>
+              <div className="text-xs md:text-sm text-white/70 break-words hyphens-auto">{t('t29')}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[#B7D662]">632 m</div>
-              <div className="text-xs md:text-sm text-white/70">Altitudine</div>
+              <div className="text-xl min-[400px]:text-2xl md:text-3xl font-bold text-[#B7D662] whitespace-nowrap">{t('t30')}</div>
+              <div className="text-xs md:text-sm text-white/70 break-words hyphens-auto">{t('t31')}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[#B7D662]">1200/h</div>
-              <div className="text-xs md:text-sm text-white/70">Capacitate transport</div>
+              <div className="text-xl min-[400px]:text-2xl md:text-3xl font-bold text-[#B7D662] whitespace-nowrap">{t('t32')}</div>
+              <div className="text-xs md:text-sm text-white/70 break-words hyphens-auto">{t('t33')}</div>
             </div>
           </div>
         </div>
@@ -318,83 +321,73 @@ export default function Bilete() {
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  Sistemul de achiziție online în curs de actualizare
-                </h3>
-                <p className="text-gray-700 mb-2">
-                  Pentru moment, facem îmbunătățiri sistemului nostru de rezervări online pentru a vă oferi o experiență și mai bună.
-                </p>
-                <p className="text-sm text-gray-600">
-                  Biletele pot fi achiziționate de la casierie. Pentru mai multe informații contactează-ne la <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">+40 724 538 928</a>
-                </p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">{t('t34')}</h3>
+                <p className="text-gray-700 mb-2">{t('t35')}</p>
+                <p className="text-sm text-gray-600">{t.rich('t36', {
+                    a1: chunks => <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">{chunks}</a>
+                  })}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
- {/* Date Picker Section - OPTIMIZED */}
-<section className="py-8 md:py-12 bg-gray-50">
-  <div className="container mx-auto px-4 lg:px-8">
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      {/* Date Picker Section - OPTIMIZED */}
+      <section className="py-8 md:py-12 bg-gray-50">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
-          {/* Date Picker - OPTIMIZED pentru toate device-urile */}
-          <div className="flex-1 w-full">
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-center md:text-left">
-              Alege data călătoriei (opțional)
-            </label>
+                {/* Date Picker - OPTIMIZED pentru toate device-urile */}
+                <div className="flex-1 w-full">
+                  <label className="block text-sm font-medium text-gray-700 mb-2 text-center md:text-left">{t('t37')}</label>
 
-            {/* Input wrapper pentru centrare perfectă */}
-            <div className="flex justify-center md:justify-start">
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
-                className="w-full max-w-sm md:max-w-none px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#B7D662] focus:ring-2 focus:ring-[#B7D662]/20 transition-all text-center md:text-left"
-              />
-            </div>
+                  {/* Input wrapper pentru centrare perfectă */}
+                  <div className="flex justify-center md:justify-start">
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full max-w-sm md:max-w-none px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#B7D662] focus:ring-2 focus:ring-[#B7D662]/20 transition-all text-center md:text-left"
+                    />
+                  </div>
 
-            <p className="text-xs text-gray-500 mt-2 text-center md:text-left">
-              * Biletele sunt valabile 90 de zile de la achiziție
-            </p>
-          </div>
-
-          {/* Program Badge - RESPONSIVE */}
-          <div className="w-full md:w-auto">
-            <div className="bg-gradient-to-r from-[#B7D662] to-[#95b540] text-white rounded-xl p-4 md:p-5">
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <svg className="w-7 h-7 md:w-8 md:h-8 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <div className="text-center md:text-left">
-                  <p className="font-semibold text-base md:text-lg">Program</p>
-                  <p className="text-xs md:text-sm text-white/90">
-                    {programScurt(program)}
-                  </p>
+                  <p className="text-xs text-gray-500 mt-2 text-center md:text-left">{t('t38')}</p>
                 </div>
+
+                {/* Program Badge - RESPONSIVE */}
+                <div className="w-full md:w-auto">
+                  <div className="bg-gradient-to-r from-[#B7D662] to-[#95b540] text-white rounded-xl p-4 md:p-5">
+                    <div className="flex items-center justify-center md:justify-start gap-3">
+                      <svg className="w-7 h-7 md:w-8 md:h-8 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                      <div className="text-center md:text-left">
+                        <p className="font-semibold text-base md:text-lg">{t('t39')}</p>
+                        <p className="text-xs md:text-sm text-white/90">
+                          {programScurt(program, limba)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Main Tickets Section */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold text-gray-900 mb-4">
-              Alege tipul de <span className="text-[#B7D662] font-bold">bilet</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Selectează biletele dorite și adaugă-le în coș.
-            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold text-gray-900 mb-4">{t.rich('t40', {
+                span1: chunks => <span className="text-[#B7D662] font-bold">{chunks}</span>
+              })}</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t('t41')}</p>
           </div>
 
           {/* Ticket Cards */}
@@ -407,14 +400,10 @@ export default function Bilete() {
                 } ${ticket.special ? 'ring-2 ring-blue-500' : ''}`}
               >
 {ticket.popular && (
-  <div className="absolute top-1 right-4 bg-[#B7D662] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
-    POPULAR
-  </div>
+  <div className="absolute top-1 right-4 bg-[#B7D662] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">{t('t42')}</div>
 )}
 {ticket.special && (
-  <div className="absolute top-1 right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
-    SPECIAL
-  </div>
+  <div className="absolute top-1 right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">{t('t43')}</div>
 )}
 
                 {/* Header with gradient */}
@@ -424,7 +413,9 @@ export default function Bilete() {
                       {ticket.icon}
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-bold">{ticket.price} RON</div>
+                      <div className="text-3xl font-bold">{t('t44', {
+                          v1: ticket.price
+                        })}</div>
                       <div className="text-sm text-white/80">{ticket.description}</div>
                     </div>
                   </div>
@@ -449,9 +440,7 @@ export default function Bilete() {
                     id={`add-${ticket.id}`}
                     onClick={() => addToCart(ticket)}
                     className="w-full py-3 bg-gradient-to-r from-[#B7D662] to-[#95b540] hover:from-[#95b540] hover:to-[#B7D662] text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-md"
-                  >
-                    Adaugă în coș
-                  </button>
+                  >{t('t45')}</button>
                 </div>
               </div>
             ))}
@@ -459,9 +448,9 @@ export default function Bilete() {
 
           {/* Oferte Speciale */}
           <div className="max-w-6xl mx-auto mb-16">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-              Oferte pentru <span className="text-[#B7D662]">grupuri</span>
-            </h3>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">{t.rich('t46', {
+                span1: chunks => <span className="text-[#B7D662]">{chunks}</span>
+              })}</h3>
             <div className="grid md:grid-cols-2 gap-6">
               {specialOffers.map((offer) => (
                 <div
@@ -493,19 +482,21 @@ export default function Bilete() {
 
           {/* Abonamente */}
           <div className="max-w-6xl mx-auto mb-16">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-              Abonamente <span className="text-[#B7D662]">avantajoase</span>
-            </h3>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">{t.rich('t47', {
+                span1: chunks => <span className="text-[#B7D662]">{chunks}</span>
+              })}</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {subscriptions.map((sub) => (
                 <div key={sub.id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all p-6">
                   <div className={`h-2 bg-gradient-to-r ${sub.color} rounded-full mb-4`}></div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">{sub.name}</h4>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{sub.price} RON</div>
+                  <div className="text-3xl font-bold text-gray-900 mb-2">{t('t48', {
+                      v1: sub.price
+                    })}</div>
                   <p className="text-sm text-gray-600 mb-3">{sub.description}</p>
-                  <div className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full inline-block">
-                    Economisești {sub.savings} RON
-                  </div>
+                  <div className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full inline-block">{t('t49', {
+                      v1: sub.savings
+                    })}</div>
                 </div>
               ))}
             </div>
@@ -514,28 +505,38 @@ export default function Bilete() {
           {/* Note importante */}
           <div className="max-w-4xl mx-auto mb-16">
             <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-4">Informații importante:</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-4">{t('t50')}</h3>
               <ul className="space-y-2 text-sm text-blue-800">
-                <li>• <strong>Copii sub 5 ani</strong> - transport gratuit</li>
-                <li>• <strong>Persoane cu dizabilități</strong> - gratuit o călătorie pe zi (cu abonament gratuit de la casierie)</li>
-                <li>• <strong>Pensionari din Piatra Neamț</strong> - gratuit în ultima miercuri din lună</li>
-                <li>• <strong>*Localități limitrofe:</strong> Alexandrul cel Bun, Dumbrava Roșie, Gărcina și Girov</li>
-                <li>• <strong>**Dovada domiciliului</strong> se face cu act de identitate</li>
+                <li>{t.rich('t51', {
+                    b: chunks => <strong>{chunks}</strong>
+                  })}</li>
+                <li>{t.rich('t52', {
+                    b: chunks => <strong>{chunks}</strong>
+                  })}</li>
+                <li>{t.rich('t53', {
+                    b: chunks => <strong>{chunks}</strong>
+                  })}</li>
+                <li>{t.rich('t54', {
+                    b: chunks => <strong>{chunks}</strong>
+                  })}</li>
+                <li>{t.rich('t55', {
+                    b: chunks => <strong>{chunks}</strong>
+                  })}</li>
               </ul>
             </div>
           </div>
 
       {/* Photo Gallery Mini */}
 <div className="max-w-6xl mx-auto mb-16">
-  <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-    Ce vei <span className="text-[#B7D662]">experimenta</span>
-  </h3>
+  <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">{t.rich('t56', {
+      span1: chunks => <span className="text-[#B7D662]">{chunks}</span>
+    })}</h3>
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
     {[1, 2, 3, 4].map((num) => (
       <div key={num} className="relative aspect-square rounded-xl overflow-hidden group">
         <Image
           src={`/galerie/img-${num}.jpg`}
-          alt={`Experiență ${num}`}
+          alt={tf('foto', { nr: num })}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
         />
@@ -564,8 +565,8 @@ export default function Bilete() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h4 className="font-medium text-gray-900 mb-1">100% Securizat</h4>
-              <p className="text-sm text-gray-600">Plăți protejate SSL</p>
+              <h4 className="font-medium text-gray-900 mb-1">{t('t57')}</h4>
+              <p className="text-sm text-gray-600">{t('t58')}</p>
             </div>
 
             <div className="text-center">
@@ -574,8 +575,8 @@ export default function Bilete() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h4 className="font-medium text-gray-900 mb-1">Valabil 90 zile</h4>
-              <p className="text-sm text-gray-600">Flexibilitate maximă</p>
+              <h4 className="font-medium text-gray-900 mb-1">{t('t59')}</h4>
+              <p className="text-sm text-gray-600">{t('t60')}</p>
             </div>
 
             <div className="text-center">
@@ -584,8 +585,8 @@ export default function Bilete() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
               </div>
-              <h4 className="font-medium text-gray-900 mb-1">Plată Online</h4>
-              <p className="text-sm text-gray-600">Card bancar</p>
+              <h4 className="font-medium text-gray-900 mb-1">{t('t61')}</h4>
+              <p className="text-sm text-gray-600">{t('t62')}</p>
             </div>
 
             <div className="text-center">
@@ -594,60 +595,57 @@ export default function Bilete() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
-              <h4 className="font-medium text-gray-900 mb-1">Suport 24/7</h4>
-              <p className="text-sm text-gray-600">Suntem aici pentru tine</p>
+              <h4 className="font-medium text-gray-900 mb-1">{t('t63')}</h4>
+              <p className="text-sm text-gray-600">{t('t64')}</p>
             </div>
           </div>
         </div>
       </section>
-{/* CTA Section - FIXED fără zoom */}
-<section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center overflow-hidden">
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src="/journey-bg.jpg"
-      alt=""
-      className="w-full h-full object-cover"
-      loading="lazy"
-      style={{ objectPosition: 'center' }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
-  </div>
+      {/* CTA Section - FIXED fără zoom */}
+      <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="/journey-bg.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            style={{ objectPosition: 'center' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
+        </div>
 
-  {/* Content */}
-  <div className="container mx-auto px-4 lg:px-8 relative z-10">
-    <div className="max-w-4xl">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-8 leading-tight">
-        Cumpără bilet<br />
-        <span className="font-semibold italic text-[#B7D662]">online</span>
-      </h2>
-      <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-8 md:mb-12 max-w-3xl">
-        Pentru moment sistemul online este în curs de actualizare.
-        Contactează-ne pentru mai multe informații.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <a
-          href="tel:+40724538928"
-          className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl"
-        >
-          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-          <span>+40 724 538 928</span>
-        </a>
-        <a
-          href="mailto:office@perlainvest.ro"
-          className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all"
-        >
-          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          <span>Trimite email</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+        {/* Content */}
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-8 leading-tight">{t.rich('t65', {
+                br: () => <br />,
+                span1: chunks => <span className="font-semibold italic text-[#B7D662]">{chunks}</span>
+              })}</h2>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-8 md:mb-12 max-w-3xl">{t('t66')}</p>
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+              <a
+                href="tel:+40724538928"
+                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl"
+              >
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>+40 724 538 928</span>
+              </a>
+              <a
+                href="mailto:office@perlainvest.ro"
+                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all"
+              >
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>{t('t67')}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
 
@@ -662,36 +660,31 @@ export default function Bilete() {
                 </svg>
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Sistemul online în curs de actualizare
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('t68')}</h3>
 
-              <p className="text-gray-600 mb-6">
-                Pentru moment, lucrăm la îmbunătățirea sistemului nostru de rezervări online.
-                Vă rugăm să achiziționați biletele:
-              </p>
+              <p className="text-gray-600 mb-6">{t('t69')}</p>
 
               <div className="space-y-3 text-left mb-6">
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-[#B7D662] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-gray-700">Direct de la casieria telegondolei</span>
+                  <span className="text-gray-700">{t('t70')}</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-[#B7D662] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-gray-700">Pentru informați sunați la <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">+40 724 538 928</a></span>
+                  <span className="text-gray-700">{t.rich('t71', {
+                      a1: chunks => <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">{chunks}</a>
+                    })}</span>
                 </div>
               </div>
 
               <button
                 onClick={() => setShowUnavailableModal(false)}
                 className="w-full py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-xl transition-colors"
-              >
-                Am înțeles
-              </button>
+              >{t('t72')}</button>
             </div>
           </div>
         </div>
@@ -777,5 +770,5 @@ export default function Bilete() {
         }
       `}</style>
     </div>
-  )
+  );
 }

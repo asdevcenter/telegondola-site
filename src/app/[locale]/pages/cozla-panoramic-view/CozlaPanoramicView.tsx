@@ -360,7 +360,7 @@ export default function CozlaPanoramicView() {
               </div>
 
               <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-1">
-                {['Vedere panoramică', 'Terasă acoperită', 'Acces cu telegondola'].map(
+                {[tc('facilitati.vedere'), tc('facilitati.terasa'), tc('facilitati.acces')].map(
                   (item, i) => (
                     <div
                       key={i}
@@ -477,7 +477,7 @@ export default function CozlaPanoramicView() {
             </div>
 
             <div className="flex flex-wrap gap-2.5 sm:gap-4 mt-7 sm:mt-8">
-              {['Lacul Bâtca Doamnei', 'Dealurile din jur', 'Masivul Ceahlău'].map(
+              {[tc('repere.lac'), tc('repere.dealuri'), tc('repere.ceahlau')].map(
                 (item, i) => (
                   <div
                     key={i}
@@ -941,9 +941,7 @@ export default function CozlaPanoramicView() {
                     <h3 className="font-semibold text-base sm:text-lg text-gray-900 mb-1">{t('t76')}</h3>
                     <p className="text-gray-600 text-sm mb-2">{t('t77')}</p>
                     <a
-                      href={`mailto:${EMAIL}?subject=${encodeURIComponent(
-                        'Solicitare rezervare — Cozla Panoramic View'
-                      )}`}
+                      href={`mailto:${EMAIL}?subject=${encodeURIComponent(tc('wa.rezervare'))}`}
                       className="inline-flex items-center min-h-[44px] text-[#8aa844] hover:text-[#6f8a3a] font-medium break-all transition-colors text-sm sm:text-base"
                     >
                       {EMAIL}
@@ -1097,10 +1095,10 @@ export default function CozlaPanoramicView() {
       {/* ════════════════ BARĂ FIXĂ DE REZERVARE — doar mobil/tabletă ══════════
           z-[90] ca să rămână SUB meniul mobil din Navigation (z-110/120).      */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-[90] bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-        <div className="flex items-center gap-2.5 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))]">
+        <div className="flex items-center gap-2 min-[360px]:gap-2.5 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))]">
           <div className="flex-1 min-w-0">
-            <div className="text-[10px] uppercase tracking-wider text-gray-500 leading-none mb-0.5">{t('t85')}</div>
-            <div className="text-[15px] font-bold text-gray-900 leading-tight truncate">{t('t86')}</div>
+            <div className="text-[11px] uppercase tracking-wider text-gray-500 leading-none mb-0.5">{t('t85')}</div>
+            <div className="text-[13px] min-[360px]:text-[15px] font-bold text-gray-900 leading-tight truncate">{t('t86')}</div>
           </div>
 
           <a
@@ -1115,7 +1113,7 @@ export default function CozlaPanoramicView() {
 
           <a
             href="#rezervare"
-            className="inline-flex items-center justify-center h-12 px-5 rounded-full bg-[#B7D662] text-white font-semibold text-sm active:scale-95 transition-transform shadow-md whitespace-nowrap"
+            className="inline-flex items-center justify-center h-12 px-3.5 min-[360px]:px-5 rounded-full bg-[#B7D662] text-white font-semibold text-sm active:scale-95 transition-transform shadow-md whitespace-nowrap"
           >{t('t88')}</a>
         </div>
       </div>

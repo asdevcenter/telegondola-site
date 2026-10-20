@@ -14,16 +14,10 @@ export default function Galerie() {
   const [visibleImages, setVisibleImages] = useState(20)
   const [isLoading, setIsLoading] = useState(false)
   
-  // Generăm lista de imagini img-1.jpg până la img-34.jpg
+  // Fotografiile din public/galerie/: img1.jpg ... img33.jpg și img35.jpg (img34.jpg nu există).
   const images = useMemo(() => {
-    const imageList = []
-    for (let i = 1; i <= 34; i++) {
-      imageList.push({
-        id: i,
-        src: `/galerie/img${i}.jpg`
-      })
-    }
-    return imageList
+    const numere = [...Array.from({ length: 33 }, (_, i) => i + 1), 35]
+    return numere.map((i) => ({ id: i, src: `/galerie/img${i}.jpg` }))
   }, [])
   
   // Imagini afișate

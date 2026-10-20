@@ -476,7 +476,7 @@ export default function PreturiOrar() {
             ].map((item, i) => (
               <div key={i} className="bg-white/5 backdrop-blur-sm rounded-xl p-4 md:p-6 hover:bg-white/10 transition-all border border-white/10">
                 <div className="text-xs md:text-sm text-gray-400 mb-1 md:mb-2 break-words hyphens-auto">{item.label}</div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">{item.value}</div>
+                <div className="text-lg min-[360px]:text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-bold text-white mb-1 break-words">{item.value}</div>
                 {item.sub && <div className="text-xs md:text-sm text-gray-400">{item.sub}</div>}
               </div>
             ))}
@@ -490,7 +490,7 @@ export default function PreturiOrar() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl p-6 md:p-8 lg:p-12 shadow-xl">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8 text-center">
-                Contact
+                {t('contactTitlu')}
               </h2>
 
               <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
