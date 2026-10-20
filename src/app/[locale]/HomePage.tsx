@@ -2,26 +2,13 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Sora, Inter } from 'next/font/google'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link } from '@/src/i18n/navigation'
 import { useTelegondola, programGrupat, codAnunt } from '@/src/lib/telegondola'
 
-const sora = Sora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-sora',
-  display: 'swap',
-})
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export default function Home() {
   // Programul și starea vin de la panoul de administrare.
@@ -59,7 +46,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className={`${sora.variable} ${inter.variable} font-inter`}>
+    <div className="font-inter">
 
 
       <Navigation />

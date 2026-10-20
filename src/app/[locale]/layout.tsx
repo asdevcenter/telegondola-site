@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+// Fonturile sunt în proiect (nu se mai descarcă de la Google la build),
+// cu diacriticele românești incluse.
+import '@fontsource-variable/inter'
+import '@fontsource-variable/sora'
 import '../globals.css'
 import CookieConsent from '@/src/components/CookieConsent'
 import { defaultMetadata, organizationSchema } from '@/src/lib/metadata'
 import { LIMBI_PUBLICATE, routing } from '@/src/i18n/routing'
 
-const inter = Inter({ subsets: ['latin', 'latin-ext'] })
 
 // Titlul și descrierea implicite, în limba paginii. Paginile își pun apoi propriile valori.
 export async function generateMetadata({
@@ -71,7 +73,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <NextIntlClientProvider>
           {children}
           <CookieConsent />
