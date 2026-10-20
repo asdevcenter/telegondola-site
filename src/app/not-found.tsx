@@ -1,13 +1,16 @@
-// app/not-found.tsx
 'use client'
 
 import { useEffect } from 'react'
-import { redirect } from 'next/navigation'
 
+// Orice adresă inexistentă duce la prima pagină, ca înainte.
 export default function NotFound() {
   useEffect(() => {
     window.location.href = '/'
   }, [])
 
-  return null
+  return (
+    <html lang="ro">
+      <body />
+    </html>
+  )
 }

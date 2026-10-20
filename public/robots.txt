@@ -4,8 +4,7 @@
 User-agent: *
 Allow: /
 
-# Blochează crawling pentru assets
-Disallow: /_next/static/
+# /_next/static/ rămâne deschis: Google are nevoie de el ca să afișeze paginile.
 Disallow: /api/
 
 # Permite crawling pentru imagini
