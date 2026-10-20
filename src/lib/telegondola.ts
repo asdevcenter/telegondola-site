@@ -46,6 +46,8 @@ export type ConfigTelegondola = {
     deschis: boolean
     motiv: 'program' | 'exceptie' | 'urgenta' | 'fara_program'
     mesaj: string | null
+    /** Anunțul ales din lista din admin (traductibil). Lipsește la serverele vechi. */
+    cod?: CodAnunt | null
     deschide: string | null
     inchide: string | null
   }
@@ -53,6 +55,39 @@ export type ConfigTelegondola = {
   preturi: Record<string, number>
   bilete: Bilet[]
   gratuitati: { cod: string; nume: string; descriere: string }[]
+}
+
+/**
+ * Anunțurile din caseta de pe prima pagină. În admin se aleg dintr-o listă,
+ * iar site-ul le afișează în limba vizitatorului (messages: acasa.anunt.<cod>).
+ */
+export const CODURI_ANUNT = ['mentenanta', 'meteo', 'curent'] as const
+export type CodAnunt = (typeof CODURI_ANUNT)[number]
+
+/** Textele românești ale celor trei anunțuri, ca să le recunoaștem și fără cod. */
+const ANUNT_DUPA_TEXT: Record<string, CodAnunt> = {
+  'revizie / mentenanta programata': 'mentenanta',
+  'conditii meteo nefavorabile': 'meteo',
+  'intrerupere alimentare cu energie electrica': 'curent',
+}
+
+const normal = (s: string) =>
+  s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[.!]+$/, '')
+    .trim()
+
+/**
+ * Codul anunțului de afișat: din câmpul `cod` trimis de admin sau, dacă lipsește,
+ * după textul românesc. null = text liber, afișat așa cum vine.
+ */
+export function codAnunt(stare: ConfigTelegondola['stare']): CodAnunt | null {
+  if (stare.cod && (CODURI_ANUNT as readonly string[]).includes(stare.cod)) return stare.cod
+  if (!stare.mesaj) return null
+  return ANUNT_DUPA_TEXT[normal(stare.mesaj)] ?? null
 }
 
 /** Programul de rezervă — folosit doar dacă serverul nu răspunde. */

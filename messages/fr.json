@@ -96,7 +96,12 @@
     "ctaTitlu2": "de toutes les attentes",
     "ctaText": "Découvrez Piatra Neamț sous un angle unique.",
     "cumpara": "Acheter un billet",
-    "anuntRo": "Avis (en roumain) :"
+    "anuntRo": "Avis (en roumain) :",
+    "anunt": {
+      "mentenanta": "Révision / maintenance programmée",
+      "meteo": "Conditions météo défavorables",
+      "curent": "Coupure de courant"
+    }
   },
   "cookies": {
     "titlu": "Nous utilisons des cookies",

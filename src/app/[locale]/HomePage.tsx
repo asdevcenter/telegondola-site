@@ -7,7 +7,7 @@ import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link } from '@/src/i18n/navigation'
-import { useTelegondola, programGrupat } from '@/src/lib/telegondola'
+import { useTelegondola, programGrupat, codAnunt } from '@/src/lib/telegondola'
 
 const sora = Sora({
   subsets: ['latin'],
@@ -31,7 +31,9 @@ export default function Home() {
   const limba = useLocale()
   const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
   const isOpen = stare.deschis
-  const announcement = stare.mesaj
+  // Anunțurile din lista admin-ului apar traduse; un text liber vine doar în română.
+  const cod = codAnunt(stare)
+  const announcement = cod ? t(`anunt.${cod}`) : stare.mesaj
 
   const [scrolled, setScrolled] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -104,10 +106,12 @@ export default function Home() {
             <div className="mb-4 animate-fade-in-down animation-delay-200">
               <div className="inline-block bg-red-500/90 backdrop-blur-sm border border-red-400/30 rounded-lg px-4 py-2 max-w-md">
                 {/* Anunțul vine din admin doar în română; în celelalte limbi spunem asta înainte. */}
-                {limba !== 'ro' && (
+                {limba !== 'ro' && !cod && (
                   <p className="text-white/80 text-xs font-semibold mb-0.5">{t('anuntRo')}</p>
                 )}
-                <p className="text-white text-sm font-medium" lang="ro">{announcement}</p>
+                <p className="text-white text-sm font-medium" lang={cod ? undefined : 'ro'}>
+                  {announcement}
+                </p>
               </div>
             </div>
           )}

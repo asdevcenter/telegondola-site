@@ -96,7 +96,12 @@
     "ctaTitlu2": "tuturor așteptărilor",
     "ctaText": "Descoperă Piatra Neamț dintr-o perspectivă unică.",
     "cumpara": "Cumpără bilet",
-    "anuntRo": "Anunț"
+    "anuntRo": "Anunț",
+    "anunt": {
+      "mentenanta": "Revizie / mentenanță programată",
+      "meteo": "Condiții meteo nefavorabile",
+      "curent": "Întrerupere alimentare cu energie electrică"
+    }
   },
   "cookies": {
     "titlu": "Folosim cookies",
