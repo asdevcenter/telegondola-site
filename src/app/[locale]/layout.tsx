@@ -43,6 +43,9 @@ export default async function LocaleLayout({
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  // Aceeași entitate pentru Google în toate limbile, cu descrierea în limba paginii.
+  const t = await getTranslations({ locale, namespace: 'meta.site' })
+  const schema = { ...organizationSchema, description: t('descriere') }
 
   return (
     <html lang={locale}>
@@ -64,7 +67,7 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
+            __html: JSON.stringify(schema),
           }}
         />
       </head>

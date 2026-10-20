@@ -2813,7 +2813,7 @@
       "descriere": "Prețurile biletelor pentru telegondolă, reducerile pentru copii, localnici și grupuri, abonamentele și programul de funcționare."
     },
     "puncte": {
-      "titlu": "Puncte de interes în Piatra Neamț și împrejurimi",
+      "titlu": "Puncte de interes în Piatra Neamț",
       "descriere": "Ce poți vizita în Piatra Neamț și în județul Neamț: Curtea Domnească, muzee, mănăstiri, Cheile Bicazului, Lacul Roșu, Ceahlăul și altele."
     },
     "galerie": {
@@ -2843,7 +2843,8 @@
     "cozla": {
       "titlu": "Cozla Panoramic View – cazare pe Dealul Cozla",
       "descriere": "Cazare la Cozla Panoramic View, pe Dealul Cozla din Piatra Neamț: 7 camere, terasă acoperită, vedere spre lacul Bâtca Doamnei, acces cu telegondola."
-    }
+    },
+    "atractieSufix": "Ce vezi, cum ajungi și sfaturi pentru vizită, aproape de Telegondola Piatra Neamț."
   },
   "juridic": {
     "nota": "Aceasta este versiunea în limba română, care se aplică."

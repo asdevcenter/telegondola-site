@@ -146,10 +146,6 @@ export const defaultMetadata: Metadata = {
     canonical: SITE_URL,
   },
   
-  // Verificare ownership - VA FI COMPLETAT DUPĂ GOOGLE SEARCH CONSOLE
-  verification: {
-    google: 'your-google-verification-code',
-  },
   
   // App capabilities
   appleWebApp: {
@@ -447,14 +443,6 @@ export const organizationSchema = {
     'https://www.tiktok.com/@piatradesus?_t=ZN-90oTOs7kTrC&_r=1',
   ],
   
-  // Review-uri estimate
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.7',
-    reviewCount: '1200',
-    bestRating: '5',
-    worstRating: '1',
-  },
   
   // Zonă deservită
   areaServed: [

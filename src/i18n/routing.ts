@@ -15,7 +15,7 @@ export type Limba = (typeof LIMBI)[number]
  * Pentru un build de probă cu toate limbile (de urcat pe preview):
  *   set NEXT_PUBLIC_TOATE_LIMBILE=1 && npm run build
  */
-const GATA_DE_PUBLICAT: Limba[] = ['ro']
+const GATA_DE_PUBLICAT: Limba[] = ['ro', 'en', 'fr', 'de', 'es']
 
 const TOATE =
   process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_TOATE_LIMBILE === '1'

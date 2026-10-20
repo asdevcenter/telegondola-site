@@ -43,6 +43,7 @@ export function metadatePagina(o: {
     openGraph: {
       type: 'website',
       locale: OG_LOCALE[o.limba as Limba] ?? 'ro_RO',
+      alternateLocale: LIMBI_PUBLICATE.filter((l) => l !== o.limba).map((l) => OG_LOCALE[l]),
       url,
       siteName: SITE_NAME,
       title: o.absolut ? o.titlu : `${o.titlu} | ${SITE_NAME}`,

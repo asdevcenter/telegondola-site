@@ -2813,7 +2813,7 @@
       "descriere": "Ticketpreise der Gondelbahn, Ermäßigungen für Kinder, Einheimische und Gruppen, Mehrfahrtenkarten und Öffnungszeiten."
     },
     "puncte": {
-      "titlu": "Sehenswürdigkeiten in Piatra Neamț und Umgebung",
+      "titlu": "Sehenswürdigkeiten in Piatra Neamț",
       "descriere": "Was Sie in Piatra Neamț und im Kreis Neamț besuchen können: Fürstenhof, Museen, Klöster, Bicaz-Klamm, Roter See, Ceahlău und mehr."
     },
     "galerie": {
@@ -2843,7 +2843,8 @@
     "cozla": {
       "titlu": "Cozla Panoramic View – Unterkunft auf dem Cozla-Hügel",
       "descriere": "Übernachten im Cozla Panoramic View auf dem Cozla-Hügel in Piatra Neamț: 7 Zimmer, überdachte Terrasse, Blick auf den Bâtca-Doamnei-See, Anreise mit der Gondelbahn."
-    }
+    },
+    "atractieSufix": "Sehenswertes, Anreise und Tipps für den Besuch, nahe der Gondelbahn Piatra Neamț."
   },
   "juridic": {
     "nota": "Diese Übersetzung dient nur der Information. Im Zweifel gilt die rumänische Fassung."
