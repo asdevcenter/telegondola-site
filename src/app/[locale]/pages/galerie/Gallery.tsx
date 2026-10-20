@@ -4,8 +4,11 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/src/i18n/navigation'
 
 export default function Galerie() {
+  const t = useTranslations('galerie')
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [visibleImages, setVisibleImages] = useState(20)
@@ -93,7 +96,7 @@ export default function Galerie() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/hero-galerie.jpg"
-            alt="Galerie Telegondola"
+            alt={t('imagineHero')}
             fill
             className="object-cover"
             priority
@@ -105,10 +108,10 @@ export default function Galerie() {
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-8 leading-tight animate-fade-in-up">
-            Galerie <span className="text-[#B7D662]">foto</span>
+            {t.rich('titlu', { c: (c) => <span className="text-[#B7D662]">{c}</span> })}
           </h1>
           <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 max-w-3xl mx-auto mb-8 md:mb-12 animate-fade-in-up animation-delay-200">
-            Momente capturate din călătoriile cu telegondola și peisajele spectaculoase ale orașului
+            {t('subtitlu')}
           </p>
           
   
@@ -196,7 +199,7 @@ export default function Galerie() {
           className="group relative px-10 py-4 overflow-hidden rounded-full bg-gradient-to-r from-[#B7D662] to-[#a5c550] text-white font-semibold shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:scale-105"
         >
           <span className="relative z-10 flex items-center gap-2">
-            <span>Vezi mai multe fotografii</span>
+            <span>{t('maiMulte')}</span>
             <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -230,28 +233,28 @@ export default function Galerie() {
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
       <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-8 leading-tight">
-        Vino să creezi<br />
-        <span className="font-semibold italic text-[#B7D662]">propria poveste</span>
+        {t('ctaTitlu1')}<br />
+        <span className="font-semibold italic text-[#B7D662]">{t('ctaTitlu2')}</span>
       </h2>
       <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-white/80 mb-6 md:mb-8 lg:mb-12 max-w-3xl">
-        Fiecare urcare cu telegondola oferă un unghi diferit asupra orașului și a peisajului din jur.
+        {t('ctaText')}
       </p>
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <a 
+        <Link 
           href="/pages/tickets" 
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 md:py-4 px-6 md:px-10 rounded-full text-sm md:text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
-          <span>Cumpără bilet</span>
+          <span>{t('cumpara')}</span>
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </a>
-        <a 
+        </Link>
+        <Link 
           href="/pages/despre-noi" 
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 md:py-4 px-6 md:px-10 rounded-full text-sm md:text-lg transition-all"
         >
-          <span>Află mai multe</span>
-        </a>
+          <span>{t('aflaMaiMulte')}</span>
+        </Link>
       </div>
     </div>
   </div>

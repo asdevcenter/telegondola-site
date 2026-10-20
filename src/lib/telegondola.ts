@@ -176,6 +176,36 @@ export function useTelegondola() {
  */
 const NUME_ZILE = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
 const NUME_SCURTE = ['Du', 'L', 'Ma', 'Mi', 'J', 'V', 'S']
+
+/**
+ * Numele zilelor în limba paginii, de duminică la sâmbătă.
+ * Scrise de mână, nu luate din browser, ca pagina generată la build să fie
+ * identică cu cea din browser.
+ */
+const ZILE: Record<string, { long: string[]; short: string[] }> = {
+  ro: { long: NUME_ZILE, short: NUME_SCURTE },
+  en: {
+    long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  },
+  fr: {
+    long: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    short: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+  },
+  de: {
+    long: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+    short: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+  },
+  es: {
+    long: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    short: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+  },
+}
+
+function numeZile(limba: string, forma: 'long' | 'short'): string[] {
+  return (ZILE[limba] ?? ZILE.ro)[forma]
+}
+
 const ORDINEA = [1, 2, 3, 4, 5, 6, 0] // săptămâna începe luni
 
 function grupeaza(
@@ -201,15 +231,16 @@ function grupeaza(
     .map(([cheie, g]) => ({ zile: g.zile.join(', '), interval: cheie }))
 }
 
-export function programGrupat(program: ZiProgram[]) {
-  return grupeaza(program, NUME_ZILE, (z) => `${z.deschide} - ${z.inchide}`)
+export function programGrupat(program: ZiProgram[], limba = 'ro') {
+  return grupeaza(program, numeZile(limba, 'long'), (z) => `${z.deschide} - ${z.inchide}`)
 }
 
 /**
  * Toate cele șapte zile, de luni până duminică, fiecare cu intervalul ei.
  * `diferit` marchează zilele care ies din tiparul săptămânii — de obicei miercurea.
  */
-export function programPeZile(program: ZiProgram[]) {
+export function programPeZile(program: ZiProgram[], limba = 'ro') {
+  const nume = numeZile(limba, 'long')
   const cateOri = new Map<string, number>()
 
   ORDINEA.forEach((ziNr) => {
@@ -232,15 +263,15 @@ export function programPeZile(program: ZiProgram[]) {
     const z = program.find((p) => p.zi === ziNr)
     if (!z) return []
     const interval = `${z.deschide} - ${z.inchide}`
-    return [{ zi: ziNr, nume: NUME_ZILE[ziNr], interval, diferit: interval !== obisnuit }]
+    return [{ zi: ziNr, nume: nume[ziNr], interval, diferit: interval !== obisnuit }]
   })
 }
 
 /** „L, Ma, J: 10-20 | Mi: 12-20 | V, S, Du: 10-20" — pentru insigne și spații mici. */
-export function programScurt(program: ZiProgram[]): string {
+export function programScurt(program: ZiProgram[], limba = 'ro'): string {
   const fara00 = (ora: string) => (ora.endsWith(':00') ? ora.slice(0, -3) : ora)
 
-  return grupeaza(program, NUME_SCURTE, (z) => `${fara00(z.deschide)}-${fara00(z.inchide)}`)
+  return grupeaza(program, numeZile(limba, 'short'), (z) => `${fara00(z.deschide)}-${fara00(z.inchide)}`)
     .map((r) => `${r.zile}: ${r.interval}`)
     .join(' | ')
 }

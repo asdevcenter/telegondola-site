@@ -1,8 +1,10 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 export default function CookieConsent() {
+  const t = useTranslations('cookies')
   const [showBanner, setShowBanner] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   
@@ -83,36 +85,35 @@ export default function CookieConsent() {
       {!showSettings && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-50 animate-slide-up">
           <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-6xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4 max-w-6xl mx-auto">
               
-              <div className="flex-1 text-center md:text-left">
+              <div className="flex-1 text-center lg:text-left">
                 <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                  🍪 Folosim cookies
+                  🍪 {t('titlu')}
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Folosim cookies pentru a îmbunătăți experiența ta pe site. 
-                  Poți accepta toate cookie-urile sau le poți gestiona individual.
+                  {t('text')}
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
                 <button
                   onClick={() => setShowSettings(true)}
-                  className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                  className="whitespace-nowrap px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
                 >
-                  Setări cookies
+                  {t('setari')}
                 </button>
                 <button
                   onClick={acceptNecessary}
-                  className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                  className="whitespace-nowrap px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
                 >
-                  Doar necesare
+                  {t('doarNecesare')}
                 </button>
                 <button
                   onClick={acceptAll}
-                  className="px-6 py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-lg transition-all shadow-md"
+                  className="whitespace-nowrap px-6 py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-lg transition-all shadow-md"
                 >
-                  Acceptă toate
+                  {t('acceptaToate')}
                 </button>
               </div>
 
@@ -129,9 +130,10 @@ export default function CookieConsent() {
             {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">Setări cookies</h2>
+                <h2 className="text-2xl font-bold text-gray-900">{t('setari')}</h2>
                 <button
                   onClick={() => setShowSettings(false)}
+                  aria-label={t('inchide')}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,26 +150,26 @@ export default function CookieConsent() {
               <div className="pb-6 border-b border-gray-200">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <h3 className="font-bold text-gray-900">Cookies necesare</h3>
+                    <h3 className="font-bold text-gray-900">{t('necesare')}</h3>
                     <span className="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full">
-                      Întotdeauna active
+                      {t('mereuActive')}
                     </span>
                   </div>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Aceste cookie-uri sunt esențiale pentru funcționarea site-ului și nu pot fi dezactivate. 
-                  Ele includ cookie-uri de sesiune, securitate și preferințe de bază.
+                  {t('necesareText')}
                 </p>
               </div>
 
               {/* Analytics */}
               <div className="pb-6 border-b border-gray-200">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-bold text-gray-900">Cookies de analiză</h3>
+                  <h3 className="font-bold text-gray-900">{t('analiza')}</h3>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={preferences.analytics}
+                      aria-label={t('analiza')}
                       onChange={(e) => setPreferences({ ...preferences, analytics: e.target.checked })}
                       className="sr-only peer"
                     />
@@ -175,19 +177,19 @@ export default function CookieConsent() {
                   </label>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Ne ajută să înțelegem cum folosești site-ul pentru a-l îmbunătăți. 
-                  Colectăm date anonime despre vizitatori și comportamentul pe site.
+                  {t('analizaText')}
                 </p>
               </div>
 
               {/* Marketing */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-bold text-gray-900">Cookies de marketing</h3>
+                  <h3 className="font-bold text-gray-900">{t('marketing')}</h3>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={preferences.marketing}
+                      aria-label={t('marketing')}
                       onChange={(e) => setPreferences({ ...preferences, marketing: e.target.checked })}
                       className="sr-only peer"
                     />
@@ -195,8 +197,7 @@ export default function CookieConsent() {
                   </label>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Folosite pentru a afișa reclame relevante și pentru a măsura eficiența campaniilor publicitare. 
-                  Pot fi setate de parteneri publicitari.
+                  {t('marketingText')}
                 </p>
               </div>
 
@@ -208,13 +209,13 @@ export default function CookieConsent() {
                 onClick={acceptNecessary}
                 className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
               >
-                Doar necesare
+                {t('doarNecesare')}
               </button>
               <button
                 onClick={savePreferences}
                 className="flex-1 px-6 py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-lg transition-all"
               >
-                Salvează preferințele
+                {t('salveaza')}
               </button>
             </div>
 

@@ -1,6 +1,13 @@
+'use client'
+
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/src/i18n/navigation'
 
 export default function Footer() {
+  const t = useTranslations('subsol')
+  const m = useTranslations('meniu')
+
   return (
     <footer className="bg-gray-50 text-gray-800 relative" id="contact">
       <div className="relative w-full h-32 overflow-hidden bg-gradient-to-b from-blue-50 to-gray-50">
@@ -32,8 +39,7 @@ export default function Footer() {
               className="h-12 w-auto mb-6"
             />
             <p className="text-gray-600 mb-6 max-w-md leading-relaxed">
-              Telegondola Piatra Neamț - O călătorie spectaculoasă la 632 metri altitudine, 
-              oferind priveliști panoramice unice asupra orașului și munților înconjurători.
+              {t('descriere')}
             </p>
             
             <div className="flex gap-3">
@@ -74,34 +80,34 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Link-uri Rapide</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">{t('linkuri')}</h3>
             <ul className="space-y-2.5">
               {[
-                { name: 'Despre noi', href: '/pages/despre-noi' },
-                { name: 'Tarife și program', href: '/pages/tarife-program' },
-                { name: 'Puncte de interes', href: '/pages/puncte-de-interes' },
-                { name: 'Cazare — Cozla Panoramic View', href: '/pages/cozla-panoramic-view' },
-                { name: 'Galerie', href: '/pages/galerie' },
-                { name: 'Contact', href: '/pages/contact' }
+                { name: m('despre'), href: '/pages/despre-noi' },
+                { name: m('tarife'), href: '/pages/tarife-program' },
+                { name: m('puncte'), href: '/pages/puncte-de-interes' },
+                { name: t('cazare'), href: '/pages/cozla-panoramic-view' },
+                { name: m('galerie'), href: '/pages/galerie' },
+                { name: m('contact'), href: '/pages/contact' }
               ].map((link) => (
-                <li key={link.name}>
-                  <a 
+                <li key={link.href}>
+                  <Link 
                     href={link.href} 
                     className="text-gray-600 hover:text-[#B7D662] transition-colors text-sm inline-flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-[#B7D662] rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">{t('contact')}</h3>
             <div className="space-y-4">
               <a 
-                href="tel:0724538928" 
+                href="tel:+40724538928" 
                 className="flex items-start gap-3 text-gray-600 hover:text-[#B7D662] transition-colors group"
               >
                 <div className="w-9 h-9 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#B7D662]/20 transition-colors">
@@ -110,8 +116,8 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-gray-500 mb-0.5">Telefon</div>
-                  <div className="text-sm font-medium">0724 538 928</div>
+                  <div className="text-xs font-medium text-gray-500 mb-0.5">{t('telefon')}</div>
+                  <div className="text-sm font-medium">{t('telefonAfisat')}</div>
                 </div>
               </a>
               
@@ -125,7 +131,7 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-gray-500 mb-0.5">Email</div>
+                  <div className="text-xs font-medium text-gray-500 mb-0.5">{t('email')}</div>
                   <div className="text-sm font-medium">office@perlainvest.ro</div>
                 </div>
               </a>
@@ -138,11 +144,11 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-gray-500 mb-0.5">Adresă</div>
+                  <div className="text-xs font-medium text-gray-500 mb-0.5">{t('adresa')}</div>
                   <div className="text-sm">
                     Piața Gării 7<br />
                     Piatra Neamț<br />
-                    România
+                    {t('tara')}
                   </div>
                 </div>
               </div>
@@ -153,14 +159,14 @@ export default function Footer() {
         <div className="border-t border-gray-200 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-600 text-center md:text-left">
-              <p>&copy; 2025 Perla Invest • Piatra de sus • Telegondola Piatra Neamț. Toate drepturile rezervate.</p>
+              <p>{t('drepturi', { an: new Date().getFullYear() })}</p>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm">
-              <a href="/pages/cookies" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">Cookies</a>
+              <Link href="/pages/cookies" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('cookies')}</Link>
 
-              <a href="/pages/terms" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">Termeni și condiții</a>
-              <a href="/pages/confidentialitate" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">Politica de confidențialitate</a>
+              <Link href="/pages/terms" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('termeni')}</Link>
+              <Link href="/pages/confidentialitate" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('confidentialitate')}</Link>
               <a href="https://anpc.ro" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">ANPC</a>
             </div>
           </div>

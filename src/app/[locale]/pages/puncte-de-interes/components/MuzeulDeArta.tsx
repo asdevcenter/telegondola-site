@@ -2,21 +2,23 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/src/i18n/navigation'
 import Navigation from '@/src/components/Navigation'
+import { useTranslations } from 'next-intl'
 import Footer from '@/src/components/layout/Footer'
 
 export default function MuzeulDeArta() {
+  const t = useTranslations('pagini.MuzeulDeArta')
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/puncte-de-interes/muzeul-arta-hero.jpg"
-            alt="Muzeul de Artă Piatra Neamț"
+            alt={t('t01')}
             fill
             className="object-cover"
             priority
@@ -26,28 +28,26 @@ export default function MuzeulDeArta() {
         
         <div className="relative h-full flex items-center justify-center text-center">
           <div className="max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Muzeul de Artă Piatra Neamț
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">{t('t02')}</h1>
             <div className="flex flex-wrap items-center justify-center gap-6 text-white/90">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                 </svg>
-                <span>Artă românească</span>
+                <span>{t('t03')}</span>
               </span>
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span>Din 1960</span>
+                <span>{t('t04')}</span>
               </span>
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>Curtea Domnească</span>
+                <span>{t('t05')}</span>
               </span>
             </div>
           </div>
@@ -60,34 +60,34 @@ export default function MuzeulDeArta() {
           
           {/* Introducere */}
           <div className="max-w-4xl mx-auto mb-16 text-center">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Un reper cultural al orașului, situat chiar în centrul istoric, în perimetrul Curții Domnești. 
-              Muzeul de Artă Piatra Neamț oferă o incursiune elegantă în evoluția artelor vizuale românești – 
-              de la clasic la contemporan.
-            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">{t('t06')}</p>
           </div>
 
           {/* Despre muzeu Section */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Despre muzeu
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t07')}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div>
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    Colecția de artă își are originile în activitatea părintelui Constantin Matasă (1878–1971), 
-                    fondatorul Muzeului Arheologic. În 1960, prin sprijinul pictoriței Iulia Hălăucescu, 
-                    a fost creată Secția de Artă. Din 1980 devine instituție de sine stătătoare.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Colecția include:</h3>
+                  <p className="mb-4">{t('t08')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t09')}</h3>
                   <ul className="space-y-2">
-                    <li><strong>Pictură</strong> românească clasică și contemporană</li>
-                    <li><strong>Grafică</strong> și desen artistic</li>
-                    <li><strong>Sculptură</strong> modernă</li>
-                    <li><strong>Tapiserie</strong> decorativă</li>
-                    <li><strong>Expoziții temporare</strong> și retrospective</li>
+                    <li>{t.rich('t10', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t11', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t12', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t13', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t14', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
                   </ul>
                 </div>
               </div>
@@ -95,7 +95,7 @@ export default function MuzeulDeArta() {
               <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/muzeul-arta-1.jpg"
-                  alt="Interior muzeu - sală expoziție"
+                  alt={t('t15')}
                   fill
                   className="object-cover"
                 />
@@ -105,15 +105,13 @@ export default function MuzeulDeArta() {
 
           {/* Clădirea muzeului Section */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Clădirea muzeului
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t16')}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div className="order-2 lg:order-1 relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/muzeul-arta-2.jpg"
-                  alt="Clădirea Muzeului de Artă"
+                  alt={t('t17')}
                   fill
                   className="object-cover"
                 />
@@ -121,18 +119,14 @@ export default function MuzeulDeArta() {
               
               <div className="order-1 lg:order-2">
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    Edificiul a fost construit în 1930 ca Școala Primară nr. 1 de băieți „Lascăr Catargi", 
-                    proiectat de arhitecții Roger Bolomey și Fr. Droz. Arhitectura îmbină elemente tradiționale 
-                    moldovenești cu detalii moderne ale epocii interbelice.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Detalii arhitecturale:</h3>
+                  <p className="mb-4">{t('t18')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t19')}</h3>
                   <ul className="space-y-2">
-                    <li>Alternarea piatră și cărămidă</li>
-                    <li>Ocnițe decorative tradiționale</li>
-                    <li>Ferestre arcuite specific moldovenești</li>
-                    <li>Decorațiuni sculptate de Vicenzo Puschiasis</li>
-                    <li>Restaurare completă în 2010-2011</li>
+                    <li>{t('t20')}</li>
+                    <li>{t('t21')}</li>
+                    <li>{t('t22')}</li>
+                    <li>{t('t23')}</li>
+                    <li>{t('t24')}</li>
                   </ul>
                 </div>
               </div>
@@ -141,24 +135,24 @@ export default function MuzeulDeArta() {
 
           {/* Artiști reprezentați */}
           <div className="bg-[#B7D662]/10 rounded-2xl p-8 mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Artiști reprezentați în colecție</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('t25')}</h3>
             <div className="grid md:grid-cols-2 gap-6 text-gray-700">
               <div>
-                <h4 className="font-bold text-gray-900 mb-3">Clasici români:</h4>
+                <h4 className="font-bold text-gray-900 mb-3">{t('t26')}</h4>
                 <ul className="space-y-2">
-                  <li>• Nicolae Tonitza</li>
-                  <li>• Gheorghe Petrașcu</li>
-                  <li>• Francisc Șirato</li>
-                  <li>• Vladimir Frimu</li>
+                  <li>{t('t27')}</li>
+                  <li>{t('t28')}</li>
+                  <li>{t('t29')}</li>
+                  <li>{t('t30')}</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900 mb-3">Artiști locali:</h4>
+                <h4 className="font-bold text-gray-900 mb-3">{t('t31')}</h4>
                 <ul className="space-y-2">
-                  <li>• C.D. Stahi</li>
-                  <li>• Aurel Băeșu</li>
-                  <li>• Lascăr Vorel</li>
-                  <li>• Iulia Hălăucescu</li>
+                  <li>{t('t32')}</li>
+                  <li>{t('t33')}</li>
+                  <li>{t('t34')}</li>
+                  <li>{t('t35')}</li>
                 </ul>
               </div>
             </div>
@@ -167,45 +161,43 @@ export default function MuzeulDeArta() {
           {/* Program și tarife */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Program de vizitare</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t36')}</h3>
               <div className="space-y-3 text-gray-700">
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="font-semibold">Luni</span>
-                  <span>Închis</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="font-semibold">Aprilie–Septembrie</span>
-                  <span>10:00–18:00</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="font-semibold">Octombrie–Martie</span>
-                  <span>9:00–17:00</span>
-                </div>
-                <p className="text-sm text-gray-600 pt-2">
-                  *Ultimul acces cu 30 de minute înainte de închidere
-                </p>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t37', {
+                    span1: chunks => <span className="font-semibold">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t38', {
+                    span1: chunks => <span className="font-semibold">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t39', {
+                    span1: chunks => <span className="font-semibold">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</div>
+                <p className="text-sm text-gray-600 pt-2">{t('t40')}</p>
               </div>
             </div>
             
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Tarife</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t41')}</h3>
               <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Adulți</span>
-                  <span className="font-bold text-gray-900">16 lei</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Studenți / Grup adulți</span>
-                  <span className="font-bold text-gray-900">8 lei</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Preșcolari / Elevi</span>
-                  <span className="font-bold text-gray-900">4 lei</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">Fotografiere / Filmare</span>
-                  <span className="font-bold text-gray-900">10 lei</span>
-                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t42', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t43', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t44', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2">{t.rich('t45', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
               </div>
             </div>
           </div>
@@ -217,7 +209,7 @@ export default function MuzeulDeArta() {
                 <svg className="w-5 h-5 text-[#B7D662]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
-                <span>Piața Curtea Domnească nr. 1</span>
+                <span>{t('t46')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <svg className="w-5 h-5 text-[#B7D662]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -239,9 +231,7 @@ export default function MuzeulDeArta() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Vezi locația pe Google Maps
-            </a>
+              </svg>{t('t47')}</a>
           </div>
   
         </div>
@@ -251,28 +241,19 @@ export default function MuzeulDeArta() {
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              După vizitarea muzeului
-            </h2>
-            <p className="text-xl text-white/80 mb-10">
-              Explorează întreaga zonă a Curții Domnești – Biserica Sf. Ioan Domnesc, Turnul lui Ștefan cel Mare, 
-              Muzeul Cucuteni. Iar pentru o panoramă completă asupra orașului, urcă cu Telegondola Piatra Neamț
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t('t48')}</h2>
+            <p className="text-xl text-white/80 mb-10">{t('t49')}</p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/pages/tickets"
                 className="bg-[#B7D662] hover:bg-[#95b540] text-white font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Cumpără bilet
-              </Link>
+              >{t('t50')}</Link>
               
               <Link
                 href="/pages/puncte-de-interes"
                 className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Descoperă alte atracții
-              </Link>
+              >{t('t51')}</Link>
             </div>
           </div>
         </div>
@@ -280,5 +261,5 @@ export default function MuzeulDeArta() {
 
       <Footer />
     </div>
-  )
+  );
 }

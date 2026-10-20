@@ -2,21 +2,23 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/src/i18n/navigation'
 import Navigation from '@/src/components/Navigation'
+import { useTranslations } from 'next-intl'
 import Footer from '@/src/components/layout/Footer'
 
 export default function BisericaNastereSfIoan() {
+  const t = useTranslations('pagini.BisericaSfIoan')
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/puncte-de-interes/biserica-ioan-hero.jpg"
-            alt="Biserica Nașterea Sfântului Ioan Botezătorul"
+            alt={t('t01')}
             fill
             className="object-cover"
             priority
@@ -26,15 +28,13 @@ export default function BisericaNastereSfIoan() {
         
         <div className="relative h-full flex items-center justify-center text-center">
           <div className="max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Biserica „Nașterea Sfântului Ioan Botezătorul"
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">{t('t02')}</h1>
             <div className="flex flex-wrap items-center justify-center gap-6 text-white/90">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
-                <span>Monument istoric</span>
+                <span>{t('t03')}</span>
               </span>
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ export default function BisericaNastereSfIoan() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>Curtea Domnească</span>
+                <span>{t('t04')}</span>
               </span>
             </div>
           </div>
@@ -60,35 +60,31 @@ export default function BisericaNastereSfIoan() {
           
           {/* Introducere */}
           <div className="max-w-4xl mx-auto mb-16 text-center">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Ridicată între anii 1497–1498, Biserica „Nașterea Sfântului Ioan Botezătorul" este una dintre 
-              cele mai vechi și mai valoroase construcții din Piatra Neamț. Ctitorită de Ștefan cel Mare 
-              ca parte a ansamblului Curții Domnești, reprezintă un reper al stilului moldovenesc matur, 
-              influențat de arhitectura gotică.
-            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">{t('t05')}</p>
           </div>
 
           {/* Arhitectură și detalii Section */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Arhitectură și detalii
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t06')}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div>
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    Edificiul este construit din piatră și cărămidă, cu elemente decorative rafinate: 
-                    brâu torsionat, ocnițe, contraforturi și ceramică smălțuită pe fațade. Planul bisericii 
-                    este mixt, cu abside laterale integrate în zidărie și cu o boltă interioară susținută de 
-                    calote semisferice dispuse în filă.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Elemente distinctive:</h3>
+                  <p className="mb-4">{t('t07')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t08')}</h3>
                   <ul className="space-y-2">
-                    <li><strong>Discuri ceramice</strong> verzi și galbene pe fațadă</li>
-                    <li><strong>Brâu torsionat</strong> și ocnițe decorative</li>
-                    <li><strong>Contraforturi</strong> și soclu profilat</li>
-                    <li><strong>Ancadramente</strong> de piatră sculptată cu influențe gotice</li>
+                    <li>{t.rich('t09', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t10', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t11', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t12', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
                   </ul>
                 </div>
               </div>
@@ -96,7 +92,7 @@ export default function BisericaNastereSfIoan() {
               <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/biserica-ioan-1.jpg"
-                  alt="Fațada Bisericii Sfântul Ioan"
+                  alt={t('t13')}
                   fill
                   className="object-cover"
                 />
@@ -106,15 +102,13 @@ export default function BisericaNastereSfIoan() {
 
           {/* Istorie și semnificație Section */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Istorie și semnificație
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t14')}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div className="order-2 lg:order-1 relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/biserica-ioan-2.jpg"
-                  alt="Biserica în Curtea Domnească"
+                  alt={t('t15')}
                   fill
                   className="object-cover"
                 />
@@ -122,18 +116,14 @@ export default function BisericaNastereSfIoan() {
               
               <div className="order-1 lg:order-2">
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    Biserica a fost locul de rugăciune al domnitorului și al curții sale, fiind parte integrantă 
-                    din reședința voievodală. De-a lungul secolelor, a fost restaurată cu grijă, păstrându-și 
-                    forma și materialele originale.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Valoare istorică:</h3>
+                  <p className="mb-4">{t('t16')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t17')}</h3>
                   <ul className="space-y-2">
-                    <li>Lăcaș de cult al domnitorului și curții</li>
-                    <li>Parte din reședința voievodală medievală</li>
-                    <li>Stil moldovenesc cu influențe gotice</li>
-                    <li>Restaurări care păstrează autenticitatea</li>
-                    <li>Centrul istoric al Piatra Neamț astăzi</li>
+                    <li>{t('t18')}</li>
+                    <li>{t('t19')}</li>
+                    <li>{t('t20')}</li>
+                    <li>{t('t21')}</li>
+                    <li>{t('t22')}</li>
                   </ul>
                 </div>
               </div>
@@ -143,46 +133,46 @@ export default function BisericaNastereSfIoan() {
           {/* Date tehnice și arhitectură */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Arhitectură moldovenească</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t23')}</h3>
               <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B7D662] mt-1">•</span>
-                  <span>Piatră și cărămidă cu brâu torsionat</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B7D662] mt-1">•</span>
-                  <span>Ceramică smălțuită verde și galbenă</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B7D662] mt-1">•</span>
-                  <span>Contraforturi și ocnițe decorative</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B7D662] mt-1">•</span>
-                  <span>Influențe gotice în ancadramente</span>
-                </li>
+                <li className="flex items-start gap-2">{t.rich('t24', {
+                    span1: chunks => <span className="text-[#B7D662] mt-1">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</li>
+                <li className="flex items-start gap-2">{t.rich('t25', {
+                    span1: chunks => <span className="text-[#B7D662] mt-1">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</li>
+                <li className="flex items-start gap-2">{t.rich('t26', {
+                    span1: chunks => <span className="text-[#B7D662] mt-1">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</li>
+                <li className="flex items-start gap-2">{t.rich('t27', {
+                    span1: chunks => <span className="text-[#B7D662] mt-1">{chunks}</span>,
+                    span2: chunks => <span>{chunks}</span>
+                  })}</li>
               </ul>
             </div>
             
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Informații esențiale</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t28')}</h3>
               <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Ctitor</span>
-                  <span className="font-bold text-gray-900">Ștefan cel Mare</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Perioada</span>
-                  <span className="font-bold text-gray-900">1497-1498</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Stil</span>
-                  <span className="font-bold text-gray-900">Moldovenesc-gotic</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">Monument</span>
-                  <span className="font-bold text-gray-900">Importanță națională</span>
-                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t29', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t30', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t31', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2">{t.rich('t32', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
               </div>
             </div>
           </div>
@@ -198,9 +188,7 @@ export default function BisericaNastereSfIoan() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Vezi locația pe Google Maps
-            </a>
+              </svg>{t('t33')}</a>
           </div>
   
         </div>
@@ -210,28 +198,19 @@ export default function BisericaNastereSfIoan() {
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              După vizita la biserică
-            </h2>
-            <p className="text-xl text-white/80 mb-10">
-              Descoperă și Turnul lui Ștefan cel Mare din curtea bisericii, apoi urcă în telegondolă 
-              pentru a vedea întregul centru istoric de sus
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t('t34')}</h2>
+            <p className="text-xl text-white/80 mb-10">{t('t35')}</p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/pages/tickets"
                 className="bg-[#B7D662] hover:bg-[#95b540] text-white font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Cumpără bilet
-              </Link>
+              >{t('t36')}</Link>
               
               <Link
                 href="/pages/puncte-de-interes"
                 className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Descoperă alte atracții
-              </Link>
+              >{t('t37')}</Link>
             </div>
           </div>
         </div>
@@ -239,5 +218,5 @@ export default function BisericaNastereSfIoan() {
 
       <Footer />
     </div>
-  )
+  );
 }

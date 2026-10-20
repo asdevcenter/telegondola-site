@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { Sora, Inter } from 'next/font/google'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useLocale, useTranslations } from 'next-intl'
+import { Link } from '@/src/i18n/navigation'
 import { useTelegondola, programGrupat } from '@/src/lib/telegondola'
 
 const sora = Sora({
@@ -25,6 +27,8 @@ export default function Home() {
   // Programul și starea vin de la panoul de administrare.
   // Nu se mai scriu aici: se modifică din admin și apar în cel mult un minut.
   const { gata, stare, program, preturi } = useTelegondola()
+  const t = useTranslations('acasa')
+  const limba = useLocale()
   const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
   const isOpen = stare.deschis
   const announcement = stare.mesaj
@@ -70,7 +74,7 @@ export default function Home() {
       >
         <Image
           src={`/hero-telegondola-${index + 1}.jpg`}
-          alt={`Telegondola Piatra Neamț ${index + 1}`}
+          alt={t('imagineHero', { n: index + 1 })}
           fill
           className="object-cover"
           priority={index === 0}
@@ -90,7 +94,7 @@ export default function Home() {
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isOpen ? 'bg-[#B7D662]' : 'bg-red-500'}`}></span>
               </span>
               <span className="text-white/90 text-xs font-medium tracking-wider uppercase">
-                {isOpen ? 'Deschis acum' : 'Inchis acum'}
+                {isOpen ? t('deschisAcum') : t('inchisAcum')}
               </span>
             </div>
           </div>
@@ -114,36 +118,36 @@ export default function Home() {
 
           <h1 className="text-white mb-6 max-w-5xl mx-auto font-sora">
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-4 animate-fade-in-up drop-shadow-2xl">
-              Descoperă orașul Piatra-Neamț
+              {t('titlu1')}
             </span>
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium animate-fade-in-up animation-delay-200 drop-shadow-xl">
-              de la înălțime
+              {t('titlu2')}
             </span>
           </h1>
 
           <p className="text-white text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl animate-fade-in-up animation-delay-400 drop-shadow-lg font-medium">
-            O experiență unică la 632m altitudine • Panoramă 360° asupra orașului
+            {t('subtitlu')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-600">
-            <a href="/pages/despre-noi" className="group inline-flex items-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-8 rounded-full text-base transition-all shadow-lg hover:shadow-xl">
-              <span>Despre Noi</span>
+            <Link href="/pages/despre-noi" className="group inline-flex items-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-8 rounded-full text-base transition-all shadow-lg hover:shadow-xl">
+              <span>{t('despreNoi')}</span>
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-            </a>
+            </Link>
 
-            <a href="/pages/galerie" className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-full transition-all">
+            <Link href="/pages/galerie" className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-full transition-all">
               <div className="relative w-8 h-8 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span>Descoperă</span>
-            </a>
+              <span>{t('descopera')}</span>
+            </Link>
           </div>
           <div className="mt-8 animate-fade-in-up animation-delay-800">
-  <a
+  <Link
     href="/pages/cozla-panoramic-view"
     className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 hover:border-white/40 rounded-full pl-4 pr-5 py-2.5 transition-all"
   >
@@ -154,7 +158,7 @@ export default function Home() {
     </span>
     <span className="text-left leading-tight">
       <span className="block text-[10px] font-semibold text-[#B7D662] tracking-[0.15em] uppercase">
-        Cazare
+        {t('cazare')}
       </span>
       <span className="block text-sm md:text-base font-medium text-white">
         Cozla Panoramic View
@@ -163,7 +167,7 @@ export default function Home() {
     <svg className="w-4 h-4 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
     </svg>
-  </a>
+  </Link>
 </div>
         </div>
         {/* Badge Cazare — Cozla Panoramic View */}
@@ -180,6 +184,7 @@ export default function Home() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
+              aria-label={t('slide', { n: index + 1 })}
               className={`w-8 h-1 rounded-full transition-all duration-500 ${
                 currentSlide === index
                   ? 'bg-[#B7D662] w-12'
@@ -196,10 +201,10 @@ export default function Home() {
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '1.9', unit: 'km', label: 'Lungime traseu' },
-                { value: '632', unit: 'm', label: 'Altitudine maximă' },
-                { value: '8', unit: 'min', label: 'Durata călătoriei' },
-                { value: '1200', unit: '/h', label: 'Capacitate transport' }
+                { value: '1.9', unit: 'km', label: t('statLungime') },
+                { value: '632', unit: 'm', label: t('statAltitudine') },
+                { value: '8', unit: 'min', label: t('statDurata') },
+                { value: '1200', unit: '/h', label: t('statCapacitate') }
               ].map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-3xl md:text-4xl font-light text-gray-800">
@@ -217,18 +222,18 @@ export default function Home() {
       <section className="py-20 lg:py-24 bg-gray-50" id="bilete">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
-            <span className="text-xs font-medium text-[#B7D662] tracking-wider uppercase">Tarife & Prețuri</span>
+            <span className="text-xs font-medium text-[#B7D662] tracking-wider uppercase">{t('tarifeEticheta')}</span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold text-gray-900 mt-2 mb-4">
-              Tarife <span className="font-bold">Călătorii</span>
+              {t.rich('tarifeTitlu', { b: (c) => <span className="font-bold">{c}</span> })}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Alege varianta potrivită și bucură-te de o experiență de neuitat
+              {t('tarifeSubtitlu')}
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto">
             {/* Main Tickets Grid */}
-            <div className="grid md:grid-cols-4 gap-6 lg:gap-6 mb-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 mb-8">
               {/* Adulți Dus-întors */}
               <div className="bg-white rounded-2xl p-6 lg:p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
@@ -236,14 +241,14 @@ export default function Home() {
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">Adulți</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_dus_intors', 60)}<span className="text-lg text-gray-500"> lei</span></div>
-                <p className="text-sm text-gray-500 mb-4">Dus-întors</p>
+                <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">{t('adulti')}</h3>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_dus_intors', 60)}<span className="text-lg text-gray-500"> {t('lei')}</span></div>
+                <p className="text-sm text-gray-500 mb-4">{t('dusIntors')}</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Cumpără online: indisponibil momentan</span>
+                  <span>{t('indisponibil')}</span>
                 </div>
               </div>
 
@@ -254,14 +259,14 @@ export default function Home() {
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">Adulți</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_o_cursa', 40)}<span className="text-lg text-gray-500"> lei</span></div>
-                <p className="text-sm text-gray-500 mb-4">Urcare/Coborâre</p>
+                <h3 className="text-lg font-sora font-medium mb-1 text-gray-900">{t('adulti')}</h3>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('adult_o_cursa', 40)}<span className="text-lg text-gray-500"> {t('lei')}</span></div>
+                <p className="text-sm text-gray-500 mb-4">{t('oCursa')}</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Cumpără online: indisponibil momentan</span>
+                  <span>{t('indisponibil')}</span>
                 </div>
               </div>
 
@@ -272,14 +277,14 @@ export default function Home() {
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium mb-1 text-gray-900">Copii (5-14 ani)</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_dus_intors', 40)}<span className="text-lg text-gray-500"> lei</span></div>
-                <p className="text-sm text-gray-500 mb-4">Dus-întors</p>
+                <h3 className="text-lg font-medium mb-1 text-gray-900">{t('copii')}</h3>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_dus_intors', 40)}<span className="text-lg text-gray-500"> {t('lei')}</span></div>
+                <p className="text-sm text-gray-500 mb-4">{t('dusIntors')}</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Cumpără online: indisponibil momentan</span>
+                  <span>{t('indisponibil')}</span>
                 </div>
               </div>
 
@@ -290,14 +295,14 @@ export default function Home() {
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium mb-1 text-gray-900">Copii (5-14 ani)</h3>
-                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_o_cursa', 30)}<span className="text-lg text-gray-500"> lei</span></div>
-                <p className="text-sm text-gray-500 mb-4">Urcare/Coborâre</p>
+                <h3 className="text-lg font-medium mb-1 text-gray-900">{t('copii')}</h3>
+                <div className="text-3xl font-light text-gray-900 mb-1">{pret('copil_o_cursa', 30)}<span className="text-lg text-gray-500"> {t('lei')}</span></div>
+                <p className="text-sm text-gray-500 mb-4">{t('oCursa')}</p>
                 <div className="w-full bg-gray-100 text-gray-500 font-medium py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Cumpără online: indisponibil momentan</span>
+                  <span>{t('indisponibil')}</span>
                 </div>
               </div>
             </div>
@@ -310,19 +315,19 @@ export default function Home() {
                     <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-medium mb-3 text-gray-900">Grupuri &gt; 20 persoane</h3>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">{t('grup20')}</h3>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Adulți (dus-întors)</span>
-                    <span className="font-semibold text-xl">{pret('grup20_adult', 40)} lei</span>
+                    <span className="text-gray-600">{t('adultiDusIntors')}</span>
+                    <span className="font-semibold text-xl">{pret('grup20_adult', 40)} {t('lei')}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Copii 5-14 ani</span>
-                    <span className="font-semibold text-xl">{pret('grup20_copil', 25)} lei</span>
+                    <span className="text-gray-600">{t('copii514')}</span>
+                    <span className="font-semibold text-xl">{pret('grup20_copil', 25)} {t('lei')}</span>
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 bg-[#B7D662]/10 p-3 rounded-lg">
-                  ✓ 1 însoțitor gratuit/20 pers
+                  {t('insotitor')}
                 </p>
               </div>
 
@@ -332,45 +337,45 @@ export default function Home() {
                     <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-medium mb-3 text-gray-900">Grupuri &gt; 100 persoane</h3>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">{t('grup100')}</h3>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Adulți (dus-întors)</span>
-                    <span className="font-semibold text-xl">{pret('grup100_adult', 30)} lei</span>
+                    <span className="text-gray-600">{t('adultiDusIntors')}</span>
+                    <span className="font-semibold text-xl">{pret('grup100_adult', 30)} {t('lei')}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Copii 5-14 ani</span>
-                    <span className="font-semibold text-xl">{pret('grup100_copil', 20)} lei</span>
+                    <span className="text-gray-600">{t('copii514')}</span>
+                    <span className="font-semibold text-xl">{pret('grup100_copil', 20)} {t('lei')}</span>
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 bg-[#B7D662]/10 p-3 rounded-lg">
-                  ✓ Tarife speciale pentru grupuri mari
+                  {t('grupuriMari')}
                 </p>
               </div>
             </div>
 
             {/* Abonamente Section */}
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 mb-8 text-white">
-              <h3 className="text-2xl font-sora font-semibold mb-6">Abonamente</h3>
+              <h3 className="text-2xl font-sora font-semibold mb-6">{t('abonamente')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_adult', 100)} lei</div>
-                  <p className="text-white/80 text-sm">5 călătorii adulți</p>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_adult', 100)} {t('lei')}</div>
+                  <p className="text-white/80 text-sm">{t('calatoriiAdulti', { n: 5 })}</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_copil', 50)} lei</div>
-                  <p className="text-white/80 text-sm">5 călătorii copii</p>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_5_copil', 50)} {t('lei')}</div>
+                  <p className="text-white/80 text-sm">{t('calatoriiCopii', { n: 5 })}</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_adult', 150)} lei</div>
-                  <p className="text-white/80 text-sm">10 călătorii adulți</p>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_adult', 150)} {t('lei')}</div>
+                  <p className="text-white/80 text-sm">{t('calatoriiAdulti', { n: 10 })}</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_copil', 100)} lei</div>
-                  <p className="text-white/80 text-sm">10 călătorii copii</p>
+                  <div className="text-3xl font-bold mb-1">{pret('abonament_10_copil', 100)} {t('lei')}</div>
+                  <p className="text-white/80 text-sm">{t('calatoriiCopii', { n: 10 })}</p>
                 </div>
               </div>
-              <p className="mt-4 text-sm text-white/60 text-center">* 1 călătorie = urcare sau coborâre</p>
+              <p className="mt-4 text-sm text-white/60 text-center">{t('notaCalatorie')}</p>
             </div>
 
             {/* Program Section */}
@@ -382,10 +387,10 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-medium text-gray-900">Program de funcționare</h3>
+                  <h3 className="text-xl font-medium text-gray-900">{t('program')}</h3>
                 </div>
                 <div className="space-y-3">
-                  {programGrupat(program).map((r) => (
+                  {programGrupat(program, limba).map((r) => (
                     <div key={r.interval} className="flex justify-between items-center pb-3 border-b border-gray-100 last:border-0">
                       <span className="text-gray-600">{r.zile}</span>
                       <span className="font-medium text-gray-900">{r.interval}</span>
@@ -393,7 +398,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-6 p-3 bg-[#B7D662]/10 rounded-lg">
-                  <p className="text-sm text-gray-700">Deschis 365 zile pe an!</p>
+                  <p className="text-sm text-gray-700">{t('deschis365')}</p>
                 </div>
               </div>
 
@@ -404,24 +409,24 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-medium text-gray-900">Tarife speciale</h3>
+                  <h3 className="text-xl font-medium text-gray-900">{t('speciale')}</h3>
                 </div>
                 <div className="space-y-3">
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="font-medium text-gray-900 mb-1">Cetățeni Piatra-Neamț</p>
-                    <p className="text-sm text-gray-600">{pret('localnic_adult', 25)} lei adulți / {pret('localnic_copil', 15)} lei copii</p>
+                    <p className="font-medium text-gray-900 mb-1">{t('cetateni')}</p>
+                    <p className="text-sm text-gray-600">{t('cetateniPret', { adulti: pret('localnic_adult', 25), copii: pret('localnic_copil', 15) })}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="font-medium text-gray-900 mb-1">Persoane cu dizabilități</p>
-                    <p className="text-sm text-gray-600">Gratuit (o călătorie/zi)</p>
+                    <p className="font-medium text-gray-900 mb-1">{t('dizabilitati')}</p>
+                    <p className="text-sm text-gray-600">{t('dizabilitatiText')}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="font-medium text-gray-900 mb-1">Pensionari din Piatra-Neamț</p>
-                    <p className="text-sm text-gray-600">Gratuit ultima miercuri din lună</p>
+                    <p className="font-medium text-gray-900 mb-1">{t('pensionari')}</p>
+                    <p className="text-sm text-gray-600">{t('pensionariText')}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="font-medium text-gray-900 mb-1">Copii până la 5 ani</p>
-                    <p className="text-sm text-gray-600">Gratuit</p>
+                    <p className="font-medium text-gray-900 mb-1">{t('sub5')}</p>
+                    <p className="text-sm text-gray-600">{t('gratuit')}</p>
                   </div>
                 </div>
               </div>
@@ -453,7 +458,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h4 className="font-semibold text-xl mb-2 text-gray-900">Stația de plecare</h4>
+              <h4 className="font-semibold text-xl mb-2 text-gray-900">{t('plecare')}</h4>
               <p className="text-gray-600 mb-4">Piața Gării 7</p>
               <a
                 href="https://maps.app.goo.gl/wA93S4whTgT3STtZ8"
@@ -461,7 +466,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#B7D662] hover:bg-[#a5c550] text-white px-5 py-2.5 rounded-full transition font-medium shadow-md hover:shadow-lg"
               >
-                Direcții
+                {t('directii')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
@@ -476,31 +481,31 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                 </svg>
               </div>
-              <h4 className="font-semibold text-xl mb-2 text-gray-900">Vârful Cozla</h4>
-              <p className="text-gray-600 mb-4">632m altitudine</p>
+              <h4 className="font-semibold text-xl mb-2 text-gray-900">{t('varf')}</h4>
+              <p className="text-gray-600 mb-4">{t('altitudineVarf')}</p>
             </div>
           </div>
         </div>
 
         {/* Detalii tehnice */}
         <div className="bg-white/95 backdrop-blur-sm rounded-xl p-8 shadow-xl">
-          <h3 className="text-2xl font-medium text-gray-900 mb-6">Detalii tehnice</h3>
+          <h3 className="text-2xl font-medium text-gray-900 mb-6">{t('tehnice')}</h3>
           <div className="space-y-4 text-gray-700">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-[#B7D662] rounded-full"></div>
-              <span className="font-medium">Producător: Doppelmayr (Austria)</span>
+              <span className="font-medium">{t('producator')}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-[#B7D662] rounded-full"></div>
-              <span className="font-medium">22 gondole cu 8 locuri fiecare</span>
+              <span className="font-medium">{t('gondole')}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-[#B7D662] rounded-full"></div>
-              <span className="font-medium">Viteză transport: 6 m/s</span>
+              <span className="font-medium">{t('viteza')}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-[#B7D662] rounded-full"></div>
-              <span className="font-medium">10 stâlpi, cel mai înalt: 64m</span>
+              <span className="font-medium">{t('stalpi')}</span>
             </div>
           </div>
         </div>
@@ -516,7 +521,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <p className="text-sm text-gray-500">Se încarcă harta...</p>
+              <p className="text-sm text-gray-500">{t('seIncarcaHarta')}</p>
             </div>
           </div>
 
@@ -529,7 +534,7 @@ export default function Home() {
             allowFullScreen
             loading="eager"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Locația Telegondola Piatra-Neamț - Stația de plecare"
+            title={t('titluHarta')}
             className="absolute inset-0"
           />
         </div>
@@ -545,7 +550,7 @@ export default function Home() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            Deschide în Google Maps
+            {t('deschideMaps')}
           </a>
         </div>
       </div>
@@ -556,12 +561,12 @@ export default function Home() {
 <section className="py-20 lg:py-24 bg-white" id="galerie">
   <div className="container mx-auto px-4 lg:px-8">
     <div className="text-center mb-12">
-      <span className="text-xs font-medium text-[#B7D662] tracking-wider uppercase">Galerie Foto</span>
+      <span className="text-xs font-medium text-[#B7D662] tracking-wider uppercase">{t('galerieEticheta')}</span>
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-sora font-semibold text-gray-900 mt-2 mb-4">
-        Momente <span className="font-bold italic">memorabile</span>
+        {t.rich('galerieTitlu', { i: (c) => <span className="font-bold italic">{c}</span> })}
       </h2>
       <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-        Imagini din călătorie
+        {t('galerieSubtitlu')}
       </p>
     </div>
 
@@ -588,7 +593,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
             <img
               src={`/galerie/img${item.img}.jpg`}
-              alt={`Gallery ${item.img}`}
+              alt={t('galerieAlt', { n: item.img })}
               loading={index < 3 ? "eager" : "lazy"}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
             />
@@ -597,15 +602,15 @@ export default function Home() {
       </div>
 
       <div className="text-center mt-12">
-        <a
+        <Link
           href="/pages/galerie"
           className="group inline-flex items-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-medium py-4 px-8 rounded-full transition-all transform hover:scale-105"
         >
-          <span>Vezi întreaga galerie</span>
+          <span>{t('veziGaleria')}</span>
           <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -616,7 +621,7 @@ export default function Home() {
   <div className="absolute inset-0">
     <img
       src="/journey-bg.jpg"
-      alt="Background"
+      alt=""
       className="w-full h-full object-cover"
       loading="lazy"
       style={{
@@ -632,31 +637,31 @@ export default function Home() {
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
       <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-sora font-bold text-white mb-8 leading-tight">
-        O călătorie deasupra<br />
-        <span className="font-semibold italic">tuturor așteptărilor</span>
+        {t('ctaTitlu1')}<br />
+        <span className="font-semibold italic">{t('ctaTitlu2')}</span>
       </h2>
       <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl">
-        Descoperă Piatra Neamț dintr-o perspectivă unică.
+        {t('ctaText')}
       </p>
       <div className="flex flex-col sm:flex-row gap-4">
-        <a
+        <Link
           href="/pages/galerie"
           className="inline-flex items-center justify-center gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-4 px-10 rounded-full text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
-          <span>Descoperă</span>
+          <span>{t('descopera')}</span>
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </a>
-        <a
+        </Link>
+        <Link
           href="/pages/tickets"
           className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-4 px-10 rounded-full text-lg transition-all"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
           </svg>
-          <span>Cumpără bilet</span>
-        </a>
+          <span>{t('cumpara')}</span>
+        </Link>
       </div>
     </div>
   </div>

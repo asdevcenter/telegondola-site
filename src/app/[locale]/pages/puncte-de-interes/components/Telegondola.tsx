@@ -2,12 +2,14 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/src/i18n/navigation'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useLocale, useTranslations } from 'next-intl'
 import { useTelegondola, programGrupat } from '@/src/lib/telegondola'
 
 export default function TelegondolaPiatraNeamt() {
+  const t = useTranslations('pagini.Telegondola')
   // Programul și tarifele vin de la panoul de administrare.
   // Valorile din al doilea argument se folosesc doar până răspunde serverul.
   const { program, preturi } = useTelegondola()
@@ -22,7 +24,7 @@ export default function TelegondolaPiatraNeamt() {
         <div className="absolute inset-0">
           <Image
             src="/puncte-de-interes/telegondola-hero.jpg"
-            alt="Telegondola Piatra Neamț"
+            alt={t('t01')}
             fill
             className="object-cover"
             priority
@@ -34,28 +36,26 @@ export default function TelegondolaPiatraNeamt() {
 
         <div className="relative h-full flex items-center justify-center text-center">
           <div className="max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Telegondola Piatra-Neamț
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">{t('t02')}</h1>
             <div className="flex flex-wrap items-center justify-center gap-6 text-white/90">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                 </svg>
-                <span>Atracție turistică</span>
+                <span>{t('t03')}</span>
               </span>
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span>Inaugurată 2008</span>
+                <span>{t('t04')}</span>
               </span>
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>632m altitudine</span>
+                <span>{t('t05')}</span>
               </span>
             </div>
           </div>
@@ -68,33 +68,31 @@ export default function TelegondolaPiatraNeamt() {
 
           {/* Introducere */}
           <div className="max-w-4xl mx-auto mb-16 text-center">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Telegondola Piatra-Neamț este una dintre cele mai moderne și spectaculoase instalații de transport pe cablu din România.
-              Inaugurată în februarie 2008, oferă o experiență unică de a admira orașul dintr-o perspectivă aeriană,
-              conectând Gara Piatra-Neamț cu vârful Cozla într-o călătorie de 8 minute.
-            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">{t('t06')}</p>
           </div>
 
           {/* Experiența Section cu imagini */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Experiența Telegondolei
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t07')}</h2>
 
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div>
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    În timpul călătoriei de aproximativ 8 minute, veți avea parte de priveliști spectaculoase
-                    asupra orașului Piatra Neamț, lacului Bâtca Doamnei, Muntelui Pietricica și,
-                    în zilele senine, asupra mărețului Ceahlău.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Ce veți descoperi:</h3>
+                  <p className="mb-4">{t('t08')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t09')}</h3>
                   <ul className="space-y-2">
-                    <li><strong>Panoramă 360°</strong> asupra orașului Piatra Neamț</li>
-                    <li><strong>Lacul Bâtca Doamnei</strong> - vedere spectaculoasă</li>
-                    <li><strong>Munții din jur</strong> - Pietricica și Ceahlău</li>
-                    <li><strong>Vârful Cozla</strong> - parc de agrement și trasee turistice</li>
+                    <li>{t.rich('t10', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t11', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t12', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t13', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
                   </ul>
                 </div>
               </div>
@@ -102,7 +100,7 @@ export default function TelegondolaPiatraNeamt() {
               <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-1.jpg"
-                  alt="Vedere din telegondolă"
+                  alt={t('t14')}
                   fill
                   className="object-cover"
                 />
@@ -114,7 +112,7 @@ export default function TelegondolaPiatraNeamt() {
               <div className="relative h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-2.jpg"
-                  alt="Stația de sosire Cozla"
+                  alt={t('t15')}
                   fill
                   className="object-cover"
                 />
@@ -123,7 +121,7 @@ export default function TelegondolaPiatraNeamt() {
               <div className="relative h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-3.jpg"
-                  alt="Panoramă oraș Piatra Neamț"
+                  alt={t('t16')}
                   fill
                   className="object-cover"
                 />
@@ -133,15 +131,13 @@ export default function TelegondolaPiatraNeamt() {
 
           {/* Detalii Tehnice Section cu imagini */}
           <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Detalii Tehnice - Tehnologie Doppelmayr
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t17')}</h2>
 
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div className="order-2 lg:order-1 relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-4.jpg"
-                  alt="Gondolă Doppelmayr"
+                  alt={t('t18')}
                   fill
                   className="object-cover"
                 />
@@ -149,17 +145,24 @@ export default function TelegondolaPiatraNeamt() {
 
               <div className="order-1 lg:order-2">
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-4">
-                    Produsă de compania austriacă Doppelmayr, lider mondial în transportul pe cablu,
-                    telegondola dispune de 22 de gondole moderne, fiecare cu capacitate de 8 persoane.
-                  </p>
-                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Specificații tehnice:</h3>
+                  <p className="mb-4">{t('t19')}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t('t20')}</h3>
                   <ul className="space-y-2">
-                    <li>Lungime totală: <strong>1.915 metri</strong></li>
-                    <li>Număr stâlpi: <strong>10</strong> (cel mai înalt: 64m)</li>
-                    <li>Capacitate: <strong>1.200 persoane/oră</strong></li>
-                    <li>Viteză de deplasare: <strong>6 m/s</strong></li>
-                    <li>Durată călătorie: <strong>aprox. 8 minute</strong></li>
+                    <li>{t.rich('t21', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t22', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t23', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t24', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
+                    <li>{t.rich('t25', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</li>
                   </ul>
                 </div>
               </div>
@@ -170,7 +173,7 @@ export default function TelegondolaPiatraNeamt() {
               <div className="relative h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-5.jpg"
-                  alt="Stâlpi telegondolă"
+                  alt={t('t26')}
                   fill
                   className="object-cover"
                 />
@@ -179,7 +182,7 @@ export default function TelegondolaPiatraNeamt() {
               <div className="relative h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/telegondola-6.jpg"
-                  alt="Interior gondolă"
+                  alt={t('t27')}
                   fill
                   className="object-cover"
                 />
@@ -190,9 +193,9 @@ export default function TelegondolaPiatraNeamt() {
           {/* Program și Tarife */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Program de funcționare</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t28')}</h3>
               <ul className="space-y-3 text-gray-700">
-                {programGrupat(program).map((r) => (
+                {programGrupat(program, useLocale()).map((r) => (
                   <li key={r.interval} className="flex justify-between py-2 border-b border-gray-200 last:border-0">
                     <span>{r.zile}</span>
                     <span className="font-bold">{r.interval}</span>
@@ -200,46 +203,53 @@ export default function TelegondolaPiatraNeamt() {
                 ))}
               </ul>
               <div className="mt-6 p-4 bg-[#B7D662]/10 rounded-lg">
-                <p className="text-sm text-gray-600">
-                  📞 <strong>Contact:</strong> <a href="tel:+40724538928" className="text-[#B7D662] hover:underline">+40 724 538 928</a>
-                </p>
-                <p className="text-sm text-gray-600 mt-1">
-                  📧 <strong>Email:</strong> <a href="mailto:office@perlainvest.ro" className="text-[#B7D662] hover:underline">office@perlainvest.ro</a>
-                </p>
+                <p className="text-sm text-gray-600">{t.rich('t29', {
+                    b: chunks => <strong>{chunks}</strong>,
+                    a1: chunks => <a href="tel:+40724538928" className="text-[#B7D662] hover:underline">{chunks}</a>
+                  })}</p>
+                <p className="text-sm text-gray-600 mt-1">{t.rich('t30', {
+                    b: chunks => <strong>{chunks}</strong>,
+
+                    a1: chunks => <a
+                      href="mailto:office@perlainvest.ro"
+                      className="text-[#B7D662] hover:underline">{chunks}</a>
+                  })}</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Tarife principale</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t31')}</h3>
               <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Adulți (dus-întors)</span>
-                  <span className="font-bold text-gray-900">{pret('adult_dus_intors', 60)} lei</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Adulți (o direcție)</span>
-                  <span className="font-bold text-gray-900">{pret('adult_o_cursa', 40)} lei</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Copii 5-14 ani (dus-întors)</span>
-                  <span className="font-bold text-gray-900">{pret('copil_dus_intors', 40)} lei</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Copii sub 5 ani</span>
-                  <span className="font-bold text-[#B7D662]">GRATUIT</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">Locuitori Piatra-Neamț</span>
-                  <span className="font-bold text-gray-900">{pret('localnic_adult', 25)} lei</span>
-                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t32', {
+                    v1: pret('adult_dus_intors', 60),
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t33', {
+                    v1: pret('adult_o_cursa', 40),
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t34', {
+                    v1: pret('copil_dus_intors', 40),
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2 border-b border-gray-200">{t.rich('t35', {
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-[#B7D662]">{chunks}</span>
+                  })}</div>
+                <div className="flex justify-between py-2">{t.rich('t36', {
+                    v1: pret('localnic_adult', 25),
+                    span1: chunks => <span className="text-gray-600">{chunks}</span>,
+                    span2: chunks => <span className="font-bold text-gray-900">{chunks}</span>
+                  })}</div>
               </div>
               <div className="mt-6">
                 <Link
                   href="/pages/tarife-program"
                   className="text-[#B7D662] hover:text-[#95b540] font-medium text-sm inline-flex items-center gap-2"
-                >
-                  Vezi toate tarifele →
-                </Link>
+                >{t('t37')}</Link>
               </div>
             </div>
           </div>
@@ -255,9 +265,7 @@ export default function TelegondolaPiatraNeamt() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Vezi locația pe Google Maps
-            </a>
+              </svg>{t('t38')}</a>
           </div>
 
         </div>
@@ -267,27 +275,19 @@ export default function TelegondolaPiatraNeamt() {
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Gata pentru aventură?
-            </h2>
-            <p className="text-xl text-white/80 mb-10">
-              Cumpără biletul online și bucură-te de o experiență unică la 632 de metri altitudine
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t('t39')}</h2>
+            <p className="text-xl text-white/80 mb-10">{t('t40')}</p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/pages/tickets"
                 className="bg-[#B7D662] hover:bg-[#95b540] text-white font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Cumpără bilet
-              </Link>
+              >{t('t41')}</Link>
 
               <Link
                 href="/pages/puncte-de-interes"
                 className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Descoperă alte atracții
-              </Link>
+              >{t('t42')}</Link>
             </div>
           </div>
         </div>
@@ -295,5 +295,5 @@ export default function TelegondolaPiatraNeamt() {
 
       <Footer />
     </div>
-  )
+  );
 }

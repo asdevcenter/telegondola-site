@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
+import { useLocale, useTranslations } from 'next-intl'
+import { Link } from '@/src/i18n/navigation'
 import { useTelegondola, programGrupat } from '@/src/lib/telegondola'
 
 export default function Contact() {
@@ -11,6 +13,8 @@ export default function Contact() {
 
   // Programul vine de la panoul de administrare.
   const { program } = useTelegondola()
+  const t = useTranslations('contact')
+  const limba = useLocale()
 
   const contactInfo = [
     {
@@ -19,10 +23,10 @@ export default function Contact() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
         </svg>
       ),
-      title: 'Telefon',
+      title: t('telefon'),
       details: ['+40 724 538 928'],
       action: 'tel:+40724538928',
-      actionText: 'Sună acum',
+      actionText: t('sunaAcum'),
       primary: true
     },
     {
@@ -31,10 +35,10 @@ export default function Contact() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      title: 'Email',
+      title: t('email'),
       details: ['office@perlainvest.ro'],
       action: 'mailto:office@perlainvest.ro',
-      actionText: 'Trimite email'
+      actionText: t('trimiteEmail')
     },
     {
       icon: (
@@ -43,13 +47,13 @@ export default function Contact() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: 'Adrese',
+      title: t('adrese'),
       details: [
-        'Stație plecare: Piața Gării 7, Piatra Neamț',
-        'Stație sosire: Platoul Cozla, 632m altitudine'
+        t('statiePlecare'),
+        t('statieSosire')
       ],
       action: 'https://maps.app.goo.gl/WnXkdwCFgsbfeq1C9',
-      actionText: 'Vezi pe hartă'
+      actionText: t('veziHarta')
     },
     {
       icon: (
@@ -57,33 +61,15 @@ export default function Contact() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      title: 'Program',
-      details: programGrupat(program).map((r) => `${r.zile}: ${r.interval}`)
+      title: t('program'),
+      details: programGrupat(program, limba).map((r) => `${r.zile}: ${r.interval}`)
     }
   ]
 
-  const faqs = [
-    {
-      q: 'Pot face rezervări pentru grupuri mari?',
-      a: 'Da, oferim tarife speciale pentru grupuri de peste 20 de persoane. Vă rugăm să ne contactați telefonic la +40 724 538 928 sau prin email la office@perlainvest.ro pentru detalii și rezervări.'
-    },
-    {
-      q: 'Ce se întâmplă în caz de vreme nefavorabilă?',
-      a: 'Siguranța vizitatorilor este prioritatea noastră. În caz de vânt puternic, furtună sau alte condiții meteo periculoase, telegondola își poate suspenda temporar activitatea. Vă recomandăm să ne contactați înainte de vizită.'
-    },
-    {
-      q: 'Există facilități pentru persoane cu dizabilități?',
-      a: 'Da, telegondola este accesibilă persoanelor cu dizabilități. Oferim transport gratuit o dată pe zi, în baza abonamentului lunar eliberat gratuit la casierie, cu prezentarea actelor doveditoare.'
-    },
-    {
-      q: 'Pot anula sau modifica o rezervare?',
-      a: 'Biletele achiziționate online sunt valabile 90 de zile de la data achiziției. Pentru modificări sau anulări, vă rugăm să ne contactați cu cel puțin 24 de ore înainte.'
-    },
-    {
-      q: 'Există parcare disponibilă?',
-      a: 'Da, există parcare disponibilă în apropierea stației de plecare.'
-    }
-  ]
+  const faqs = ['grupuri', 'vreme', 'dizabilitati', 'modificari', 'parcare'].map((k) => ({
+    q: t(`faq.${k}.q`),
+    a: t(`faq.${k}.a`),
+  }))
 
   return (
     <div className="min-h-screen bg-white">
@@ -94,7 +80,7 @@ export default function Contact() {
   <div className="absolute inset-0">
     <Image
       src="/contact-hero.jpg"
-      alt="Contact Telegondola Piatra Neamț"
+      alt={t('imagineHero')}
       fill
       className="object-cover"
       priority
@@ -107,10 +93,10 @@ export default function Contact() {
   <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 animate-fade-in-up">
-        Contact
+        {t('titlu')}
       </h1>
       <p className="text-lg sm:text-xl md:text-2xl text-white/90 animate-fade-in-up animation-delay-200">
-        Echipa Telegondolei Piatra Neamț este mereu disponibilă pentru informații, rezervări sau asistență.
+        {t('subtitlu')}
       </p>
     </div>
   </div>
@@ -121,7 +107,7 @@ export default function Contact() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <a href="/pages/tickets" className="group">
+              <Link href="/pages/tickets" className="group">
                 <div className="bg-gradient-to-br from-[#B7D662] to-[#95b540] p-6 rounded-xl text-white hover:shadow-lg transition-all transform hover:-translate-y-1">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
@@ -130,12 +116,12 @@ export default function Contact() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg">Cumpără bilet</h3>
-                      <p className="text-white/80 text-sm">Online</p>
+                      <h3 className="font-semibold text-lg">{t('cumpara')}</h3>
+                      <p className="text-white/80 text-sm">{t('online')}</p>
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
 
               <a href="tel:+40724538928" className="group">
                 <div className="bg-white border-2 border-gray-200 p-6 rounded-xl hover:border-[#B7D662] hover:shadow-lg transition-all transform hover:-translate-y-1">
@@ -146,14 +132,14 @@ export default function Contact() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-[#B7D662]">Sună-ne</h3>
+                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-[#B7D662]">{t('suna')}</h3>
                       <p className="text-gray-600 text-sm">+40 724 538 928</p>
                     </div>
                   </div>
                 </div>
               </a>
 
-              <a href="https://maps.app.goo.gl/WnXkdwCFgsbfeq1C9" target="_blank" className="group">
+              <a href="https://maps.app.goo.gl/WnXkdwCFgsbfeq1C9" target="_blank" rel="noopener noreferrer" className="group">
                 <div className="bg-white border-2 border-gray-200 p-6 rounded-xl hover:border-[#B7D662] hover:shadow-lg transition-all transform hover:-translate-y-1">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-[#B7D662]/10">
@@ -162,8 +148,8 @@ export default function Contact() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-[#B7D662]">Vezi pe hartă</h3>
-                      <p className="text-gray-600 text-sm">Direcții GPS</p>
+                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-[#B7D662]">{t('veziHarta')}</h3>
+                      <p className="text-gray-600 text-sm">{t('directiiGps')}</p>
                     </div>
                   </div>
                 </div>
@@ -185,7 +171,7 @@ export default function Contact() {
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
-              Informații contact
+              {t('tabInfo')}
             </button>
             <button
               onClick={() => setActiveTab('faq')}
@@ -195,7 +181,7 @@ export default function Contact() {
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
-              Întrebări frecvente
+              {t('tabFaq')}
             </button>
           </div>
 
@@ -207,7 +193,7 @@ export default function Contact() {
     {/* Contact Info Cards */}
     <div className="space-y-6">
       <h2 className="text-3xl font-bold text-gray-900 mb-8">
-        Suntem aici pentru tine
+        {t('aiciPentruTine')}
       </h2>
 
       {contactInfo.map((info, index) => (
@@ -265,7 +251,7 @@ export default function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <p className="text-sm text-gray-500">Se încarcă harta...</p>
+              <p className="text-sm text-gray-500">{t('seIncarcaHarta')}</p>
             </div>
           </div>
 
@@ -279,7 +265,7 @@ export default function Contact() {
             loading="eager"
             referrerPolicy="no-referrer-when-downgrade"
             className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-300"
-            title="Locația Telegondola Piatra Neamț"
+            title={t('titluHarta')}
           />
         </div>
 
@@ -294,7 +280,7 @@ export default function Contact() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            Deschide în Google Maps
+            {t('deschideMaps')}
           </a>
         </div>
       </div>
@@ -308,11 +294,11 @@ export default function Contact() {
             </svg>
           </div>
           <div>
-            <h3 className="font-semibold text-lg text-red-900 mb-2">Numere de urgență</h3>
+            <h3 className="font-semibold text-lg text-red-900 mb-2">{t('urgente')}</h3>
             <div className="space-y-1 text-red-800">
-              <p>Urgențe generale: <a href="tel:112" className="font-semibold hover:underline">112</a></p>
-              <p>Salvamont: <a href="tel:0725826668" className="font-semibold hover:underline">0725 826 668</a></p>
-              <p>Dispecerat telegondolă: <a href="tel:+40724538928" className="font-semibold hover:underline">+40 724 538 928</a></p>
+              <p>{t('urgenteGenerale')} <a href="tel:112" className="font-semibold hover:underline">112</a></p>
+              <p>{t('salvamont')} <a href="tel:0725826668" className="font-semibold hover:underline">0725 826 668</a></p>
+              <p>{t('dispecerat')} <a href="tel:+40724538928" className="font-semibold hover:underline">+40 724 538 928</a></p>
             </div>
           </div>
         </div>
@@ -320,9 +306,9 @@ export default function Contact() {
 
       {/* Social Media */}
       <div className="bg-gradient-to-r from-[#B7D662] to-[#95b540] rounded-2xl p-6 text-white">
-        <h3 className="font-semibold text-xl mb-4">Urmărește-ne pe social media</h3>
+        <h3 className="font-semibold text-xl mb-4">{t('social')}</h3>
         <p className="text-white/80 mb-6">
-          Fii la curent cu ultimele noutăți, evenimente și fotografii
+          {t('socialText')}
         </p>
         <div className="flex gap-4">
           <a
@@ -369,10 +355,10 @@ export default function Contact() {
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Întrebări frecvente
+                  {t('tabFaq')}
                 </h2>
                 <p className="text-gray-600 text-lg">
-                  Răspunsuri la cele mai comune întrebări
+                  {t('faqSubtitlu')}
                 </p>
               </div>
 
@@ -394,7 +380,7 @@ export default function Contact() {
               </div>
 
               <div className="text-center mt-12">
-                <p className="text-gray-600 mb-6">Nu ai găsit răspunsul căutat?</p>
+                <p className="text-gray-600 mb-6">{t('nuAiGasit')}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href="tel:+40724538928"
@@ -403,7 +389,7 @@ export default function Contact() {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
-                    <span>Sună-ne</span>
+                    <span>{t('suna')}</span>
                   </a>
                   <a
                     href="mailto:office@perlainvest.ro"
@@ -412,7 +398,7 @@ export default function Contact() {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span>Trimite Email</span>
+                    <span>{t('trimiteEmail')}</span>
                   </a>
                 </div>
               </div>
@@ -439,22 +425,22 @@ export default function Contact() {
   <div className="container mx-auto px-4 lg:px-8 relative z-10">
     <div className="max-w-4xl">
       <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-8 leading-tight">
-        Te așteptăm la <br />
-        <span className="font-semibold italic text-[#B7D662]">telegondolă</span>
+        {t('ctaTitlu1')} <br />
+        <span className="font-semibold italic text-[#B7D662]">{t('ctaTitlu2')}</span>
       </h2>
       <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 mb-8 md:mb-12 max-w-3xl">
-        Suntem aici pentru orice întrebare sau informație de care ai nevoie.
+        {t('ctaText')}
       </p>
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <a
+        <Link
           href="/pages/tickets"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-[#B7D662] hover:bg-[#a5c550] text-white font-semibold py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl"
         >
-          <span>Cumpără bilet online</span>
+          <span>{t('cumparaOnline')}</span>
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </a>
+        </Link>
         <a
           href="tel:+40724538928"
           className="inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white font-medium py-3 px-6 md:py-4 md:px-10 rounded-full text-base md:text-lg transition-all"
@@ -462,7 +448,7 @@ export default function Contact() {
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
-          <span>Sună-ne</span>
+          <span>{t('suna')}</span>
         </a>
       </div>
     </div>

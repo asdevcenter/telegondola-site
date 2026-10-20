@@ -2,21 +2,23 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/src/i18n/navigation'
 import Navigation from '@/src/components/Navigation'
+import { useTranslations } from 'next-intl'
 import Footer from '@/src/components/layout/Footer'
 
 export default function LaculIzvorulMuntelui() {
+  const t = useTranslations('pagini.LaculIzvorulMuntelui')
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/puncte-de-interes/lacul-izvorul-muntelui-hero.jpg"
-            alt="Lacul Izvorul Muntelui"
+            alt={t('t01')}
             fill
             className="object-cover"
             priority
@@ -28,12 +30,8 @@ export default function LaculIzvorulMuntelui() {
         
         <div className="relative h-full flex items-center justify-center text-center">
           <div className="max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Lacul Izvorul Muntelui
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 font-medium">
-              „Marea dintre munți"
-            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">{t('t02')}</h1>
+            <p className="text-xl md:text-2xl text-white/90 font-medium">{t('t03')}</p>
           </div>
         </div>
       </section>
@@ -44,29 +42,19 @@ export default function LaculIzvorulMuntelui() {
           
           {/* Introducere */}
           <div className="max-w-4xl mx-auto mb-16">
-            <p className="text-lg text-gray-700 leading-relaxed mb-4">
-              Cel mai mare lac de acumulare din România montană: aproximativ 32,6 km² întins pe 
-              35 de kilometri, cu panorame largi și Ceahlăul ca fundal permanent. Barajul Bicaz 
-              impresionează cu cei 127 metri înălțime, iar coronamentul oferă serpentine fotogenice 
-              pe DN15.
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Locul în care muntele, apa și povestea se întâlnesc. Vii pentru peisaj, rămâi pentru 
-              liniște.
-            </p>
+            <p className="text-lg text-gray-700 leading-relaxed mb-4">{t('t04')}</p>
+            <p className="text-lg text-gray-700 leading-relaxed">{t('t05')}</p>
           </div>
 
           {/* Ce poți face */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
-              Ce poți face
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{t('t06')}</h2>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/lacul-izvorul-muntelui-1.jpg"
-                  alt="Lacul Izvorul Muntelui - activități"
+                  alt={t('t07')}
                   fill
                   className="object-cover"
                 />
@@ -75,27 +63,18 @@ export default function LaculIzvorulMuntelui() {
               <div className="flex flex-col justify-center">
                 <div className="space-y-5">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Pe apă</h3>
-                    <p className="text-gray-700">
-                      Croaziere din Portul Bicaz spre viaductul de la Poiana Largului, caiac și SUP 
-                      dimineața când e liniște, pescuit cu permis (păstrăv, clean, scobar).
-                    </p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{t('t08')}</h3>
+                    <p className="text-gray-700">{t('t09')}</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Pe uscat</h3>
-                    <p className="text-gray-700">
-                      Drumeții spre belvedere, urcări în Ceahlău din Durău, ciclism pe DN15 cu pauze 
-                      în golfuri și sate.
-                    </p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{t('t10')}</h3>
+                    <p className="text-gray-700">{t('t11')}</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Puncte de fotografiat</h3>
-                    <p className="text-gray-700">
-                      Coronamentul barajului dimineața, golfurile liniștite la Izvorul Alb, apus din 
-                      Portul Bicaz cu Ceahlăul pe fundal, viaductul Poiana Largului.
-                    </p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{t('t12')}</h3>
+                    <p className="text-gray-700">{t('t13')}</p>
                   </div>
                 </div>
               </div>
@@ -108,23 +87,32 @@ export default function LaculIzvorulMuntelui() {
               {/* Cum ajungi & Când */}
               <div className="space-y-6">
                 <div className="bg-gradient-to-br from-[#B7D662]/10 to-[#95b540]/10 rounded-2xl p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Cum ajungi</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">{t('t14')}</h3>
                   <div className="space-y-3 text-gray-700">
-                    <p><strong>Auto:</strong> DN15 Piatra-Neamț → Bicaz → pe lângă lac până la 
-                    Poiana Largului. Din Transilvania: DN12C prin Cheile Bicazului.</p>
-                    <p><strong>Tren:</strong> până la Gara Bicaz, apoi 5 minute cu taxiul la 
-                    baraj/port.</p>
+                    <p>{t.rich('t15', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
+                    <p>{t.rich('t16', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
                   </div>
                 </div>
                 
                 <div className="bg-gradient-to-br from-[#B7D662]/10 to-[#95b540]/10 rounded-2xl p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Când e mai frumos</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">{t('t17')}</h3>
                   <div className="space-y-2 text-gray-700 text-sm">
-                    <p><strong>Mai–iunie:</strong> verde crud, ape pline</p>
-                    <p><strong>Iulie–august:</strong> sezonul croazierelor</p>
-                    <p><strong>Septembrie–octombrie:</strong> culori de toamnă, vizibilitate 
-                    excelentă</p>
-                    <p><strong>Iarna:</strong> peisaj spectaculos, activități reduse pe apă</p>
+                    <p>{t.rich('t18', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
+                    <p>{t.rich('t19', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
+                    <p>{t.rich('t20', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
+                    <p>{t.rich('t21', {
+                        b: chunks => <strong>{chunks}</strong>
+                      })}</p>
                   </div>
                 </div>
               </div>
@@ -133,7 +121,7 @@ export default function LaculIzvorulMuntelui() {
               <div className="relative h-[400px] lg:h-full rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/puncte-de-interes/lacul-izvorul-muntelui-2.jpg"
-                  alt="Lacul Izvorul Muntelui - baraj"
+                  alt={t('t22')}
                   fill
                   className="object-cover"
                 />
@@ -146,28 +134,34 @@ export default function LaculIzvorulMuntelui() {
             <div className="grid md:grid-cols-2 gap-8">
               {/* Sfaturi utile */}
               <div className="bg-gradient-to-br from-[#B7D662]/10 to-[#95b540]/10 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Sfaturi utile</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t23')}</h3>
                 <div className="space-y-3 text-gray-700">
-                  <p className="text-sm">• Lacul e arie protejată – nu lăsa urme, nu hrăni fauna</p>
-                  <p className="text-sm">• Vântul de prânz ridică valuri – ieși pe apă dimineața</p>
-                  <p className="text-sm">• Nivelul variază; unele țărmuri pot fi nămoloase</p>
-                  <p className="text-sm">• Vara e trafic la baraj – pornește devreme</p>
-                  <p className="text-sm">• Pentru pescuit: informează-te local despre permis</p>
+                  <p className="text-sm">{t('t24')}</p>
+                  <p className="text-sm">{t('t25')}</p>
+                  <p className="text-sm">{t('t26')}</p>
+                  <p className="text-sm">{t('t27')}</p>
+                  <p className="text-sm">{t('t28')}</p>
                 </div>
               </div>
               
               {/* În apropiere */}
               <div className="bg-gradient-to-br from-[#B7D662]/10 to-[#95b540]/10 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">În apropiere</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('t29')}</h3>
                 <div className="space-y-3 text-gray-700">
-                  <p className="text-sm"><strong>Cheile Bicazului & Lacul Roșu</strong><br/>
-                  Drum scenic pe DN12C</p>
+                  <p className="text-sm">{t.rich('t30', {
+                      b: chunks => <strong>{chunks}</strong>,
+                      br: () => <br />
+                    })}</p>
                   
-                  <p className="text-sm"><strong>Masivul Ceahlău</strong><br/>
-                  Durău, Cascada Duruitoarea, vârful Toaca</p>
+                  <p className="text-sm">{t.rich('t31', {
+                      b: chunks => <strong>{chunks}</strong>,
+                      br: () => <br />
+                    })}</p>
                   
-                  <p className="text-sm"><strong>Mănăstiri</strong><br/>
-                  Secu, Sihăstria, Sihla din Ținutul Neamțului</p>
+                  <p className="text-sm">{t.rich('t32', {
+                      b: chunks => <strong>{chunks}</strong>,
+                      br: () => <br />
+                    })}</p>
                 </div>
               </div>
             </div>
@@ -176,40 +170,38 @@ export default function LaculIzvorulMuntelui() {
           {/* Itinerar propus */}
           <div className="mb-16">
             <div className="bg-white border-2 border-[#B7D662] rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                Itinerar propus (o zi lejeră)
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('t33')}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#B7D662] rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold">
                     1
                   </div>
-                  <p className="font-semibold text-gray-900 mb-2">Dimineață</p>
-                  <p className="text-gray-600 text-sm">Croazieră din Portul Bicaz → viaduct</p>
+                  <p className="font-semibold text-gray-900 mb-2">{t('t34')}</p>
+                  <p className="text-gray-600 text-sm">{t('t35')}</p>
                 </div>
                 
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#B7D662] rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold">
                     2
                   </div>
-                  <p className="font-semibold text-gray-900 mb-2">Prânz</p>
-                  <p className="text-gray-600 text-sm">Restaurant cu vedere (Potoci/Izvorul Muntelui)</p>
+                  <p className="font-semibold text-gray-900 mb-2">{t('t36')}</p>
+                  <p className="text-gray-600 text-sm">{t('t37')}</p>
                 </div>
                 
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#B7D662] rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold">
                     3
                   </div>
-                  <p className="font-semibold text-gray-900 mb-2">După-amiază</p>
-                  <p className="text-gray-600 text-sm">Coronament baraj + plimbare DN15</p>
+                  <p className="font-semibold text-gray-900 mb-2">{t('t38')}</p>
+                  <p className="text-gray-600 text-sm">{t('t39')}</p>
                 </div>
                 
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#B7D662] rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold">
                     4
                   </div>
-                  <p className="font-semibold text-gray-900 mb-2">Seară</p>
-                  <p className="text-gray-600 text-sm">Apus pe ponton cu Ceahlăul</p>
+                  <p className="font-semibold text-gray-900 mb-2">{t('t40')}</p>
+                  <p className="text-gray-600 text-sm">{t('t41')}</p>
                 </div>
               </div>
             </div>
@@ -217,24 +209,16 @@ export default function LaculIzvorulMuntelui() {
 
           {/* Știați că */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white mb-16">
-            <h3 className="text-2xl font-bold mb-4 text-center">Știați că...</h3>
+            <h3 className="text-2xl font-bold mb-4 text-center">{t('t42')}</h3>
             <div className="space-y-3 max-w-3xl mx-auto">
-              <p>
-                Hidrocentrala „Dimitrie Leonida" (Stejaru) are 210 MW; tunelul de aducțiune 
-                străpunge muntele aproximativ 4,7 km.
-              </p>
-              <p>
-                Complexul a fost construit între 1950–1960. Există o cruce comemorativă la baraj, 
-                în amintirea celor care au suferit pe șantier. Vizitează cu respect.
-              </p>
+              <p>{t('t43')}</p>
+              <p>{t('t44')}</p>
             </div>
           </div>
 
           {/* Quote final */}
           <div className="text-center">
-            <p className="text-xl md:text-2xl text-gray-700 italic font-medium">
-              „Vii pentru peisaj, rămâi pentru liniște."
-            </p>
+            <p className="text-xl md:text-2xl text-gray-700 italic font-medium">{t('t45')}</p>
           </div>
   
         </div>
@@ -244,28 +228,19 @@ export default function LaculIzvorulMuntelui() {
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Marea dintre munți te așteaptă
-            </h2>
-            <p className="text-xl text-white/80 mb-10">
-              După ce explorezi Lacul Izvorul Muntelui, continuă descoperirea regiunii cu 
-              telegondola Piatra-Neamț
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t('t46')}</h2>
+            <p className="text-xl text-white/80 mb-10">{t('t47')}</p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/pages/tickets"
                 className="bg-[#B7D662] hover:bg-[#95b540] text-white font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Cumpără bilet telegondolă
-              </Link>
+              >{t('t48')}</Link>
               
               <Link
                 href="/pages/puncte-de-interes"
                 className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full transition-all inline-block"
-              >
-                Vezi alte puncte de interes
-              </Link>
+              >{t('t49')}</Link>
             </div>
           </div>
         </div>
@@ -273,5 +248,5 @@ export default function LaculIzvorulMuntelui() {
 
       <Footer />
     </div>
-  )
+  );
 }
