@@ -28,7 +28,16 @@
     "drepturi": "© {an} Perla Invest • Piatra de sus • Telegondola Piatra Neamț. Todos los derechos reservados.",
     "cookies": "Cookies",
     "termeni": "Términos y condiciones",
-    "confidentialitate": "Política de privacidad"
+    "confidentialitate": "Política de privacidad",
+    "informatii": "Información",
+    "termeniVanzare": "Condiciones de venta",
+    "livrare": "Entrega de los billetes",
+    "anulare": "Cancelación y desistimiento",
+    "retragere": "Desistir del contrato aquí",
+    "cumpara": "Comprar billetes en línea",
+    "sal": "Resolución alternativa de litigios",
+    "plata": "Pagos seguros con NETOPIA Payments",
+    "capital": "Capital social"
   },
   "acasa": {
     "deschisAcum": "Abierto ahora",
@@ -2854,5 +2863,22 @@
     "text": "Se ha producido un error inesperado. Prueba a recargar la página.",
     "reincearca": "Reintentar",
     "acasa": "Volver al inicio"
+  },
+  "cos": {
+    "titlu": "Tu cesta",
+    "adauga": "Añadir a la cesta",
+    "scade": "Quitar uno",
+    "creste": "Añadir otro",
+    "gol": "Tu cesta está vacía.",
+    "total": "Total",
+    "tva": "Los precios incluyen IVA.",
+    "continua": "Continuar",
+    "vezi": "Ver la cesta",
+    "inchide": "Cerrar",
+    "sterge": "Quitar",
+    "bilete": "{n, plural, one {# billete} other {# billetes}}",
+    "casierie": "Solo en taquilla",
+    "valabil": "Los billetes son válidos durante {zile} días desde la fecha de compra.",
+    "urmatorul": "Tus datos y el pago se completan en el siguiente paso, en la página segura."
   }
 }

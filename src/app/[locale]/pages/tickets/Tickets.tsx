@@ -6,6 +6,7 @@ import Navigation from '@/src/components/Navigation'
 import Footer from '@/src/components/layout/Footer'
 import { useTranslations, useLocale } from 'next-intl'
 import { useTelegondola, programScurt } from '@/src/lib/telegondola'
+import { BaraCos, ButonCos } from '@/src/components/Cos'
 
 // Pozițiile particulelor din imaginea de sus. Sunt fixe (nu Math.random),
 // ca pagina generată la build să fie identică cu cea din browser.
@@ -27,22 +28,23 @@ export default function Bilete() {
   const t = useTranslations('pagini.Tickets')
   const limba = useLocale()
   const tf = useTranslations('bilete')
-  const [cart, setCart] = useState([])
-  const [showCart, setShowCart] = useState(false)
+  const tc = useTranslations('cos')
   const [activePromo, setActivePromo] = useState(0)
-  const [selectedDate, setSelectedDate] = useState('')
-  const [showUnavailableModal, setShowUnavailableModal] = useState(false)
 
   // Programul vine de la panoul de administrare.
   const { program, preturi, bilete } = useTelegondola()
   const pret = (cod: string, deRezerva: number) => preturi[cod] ?? deRezerva
   const economie = (cod: string, deRezerva: number) =>
     bilete.find((b) => b.cod === cod)?.economie ?? deRezerva
+  // ce se vinde online hotărăște panoul; până se încarcă datele, butonul e activ
+  const online = (cod: string) => bilete.find((b) => b.cod === cod)?.online ?? true
+  const zileValabil = bilete.find((b) => b.valabilZile)?.valabilZile ?? 90
 
   // Tipuri de bilete cu prețurile actualizate
   const ticketTypes = [
     {
       id: 'adult',
+      cod: 'adult_dus_intors',
       name: t('t01'),
       price: pret('adult_dus_intors', 60),
       description: t('t02'),
@@ -56,6 +58,7 @@ export default function Bilete() {
     },
     {
       id: 'adult-single',
+      cod: 'adult_o_cursa',
       name: t('t03'),
       price: pret('adult_o_cursa', 40),
       description: t('t04'),
@@ -69,6 +72,7 @@ export default function Bilete() {
     },
     {
       id: 'copil',
+      cod: 'copil_dus_intors',
       name: t('t05'),
       price: pret('copil_dus_intors', 40),
       description: t('t06'),
@@ -83,6 +87,7 @@ export default function Bilete() {
     },
     {
       id: 'copil-single',
+      cod: 'copil_o_cursa',
       name: t('t07'),
       price: pret('copil_o_cursa', 30),
       description: t('t08'),
@@ -96,6 +101,7 @@ export default function Bilete() {
     },
     {
       id: 'local-adult',
+      cod: 'localnic_adult',
       name: t('t09'),
       price: pret('localnic_adult', 25),
       description: t('t10'),
@@ -110,6 +116,7 @@ export default function Bilete() {
     },
     {
       id: 'local-copil',
+      cod: 'localnic_copil',
       name: t('t11'),
       price: pret('localnic_copil', 15),
       description: t('t12'),
@@ -148,6 +155,7 @@ export default function Bilete() {
   const subscriptions = [
     {
       id: 'abo5adult',
+      cod: 'abonament_5_adult',
       name: t('t17'),
       price: pret('abonament_5_adult', 100),
       description: t('t18'),
@@ -156,6 +164,7 @@ export default function Bilete() {
     },
     {
       id: 'abo5copil',
+      cod: 'abonament_5_copil',
       name: t('t19'),
       price: pret('abonament_5_copil', 50),
       description: t('t20'),
@@ -164,6 +173,7 @@ export default function Bilete() {
     },
     {
       id: 'abo10adult',
+      cod: 'abonament_10_adult',
       name: t('t21'),
       price: pret('abonament_10_adult', 150),
       description: t('t22'),
@@ -172,6 +182,7 @@ export default function Bilete() {
     },
     {
       id: 'abo10copil',
+      cod: 'abonament_10_copil',
       name: t('t23'),
       price: pret('abonament_10_copil', 100),
       description: t('t24'),
@@ -180,31 +191,12 @@ export default function Bilete() {
     }
   ]
 
-  // Funcții pentru coș - actualizate pentru a afișa modal
-  const addToCart = (ticketType, quantity = 1) => {
-    setShowUnavailableModal(true)
-  }
-
-  const updateQuantity = (ticketId, newQuantity) => {
-    setShowUnavailableModal(true)
-  }
-
-  const handleCheckout = () => {
-    setShowUnavailableModal(true)
-  }
-
   // Auto-advance promo carousel
   useEffect(() => {
     const timer = setInterval(() => {
       setActivePromo((prev) => (prev + 1) % 4)
     }, 4000)
     return () => clearInterval(timer)
-  }, [])
-
-  // Set minimum date to today
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0]
-    setSelectedDate(today)
   }, [])
 
   // Galerie imagini
@@ -308,30 +300,6 @@ export default function Bilete() {
 
       </section>
 
-      {/* Notificare Sistem În Actualizare */}
-      <section className="py-6 bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-4 bg-white rounded-2xl shadow-lg p-6">
-              <div className="flex-shrink-0">
-                <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center">
-                  <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">{t('t34')}</h3>
-                <p className="text-gray-700 mb-2">{t('t35')}</p>
-                <p className="text-sm text-gray-600">{t.rich('t36', {
-                    a1: chunks => <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">{chunks}</a>
-                  })}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Date Picker Section - OPTIMIZED */}
       <section className="py-8 md:py-12 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
@@ -339,22 +307,9 @@ export default function Bilete() {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
-                {/* Date Picker - OPTIMIZED pentru toate device-urile */}
-                <div className="flex-1 w-full">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 text-center md:text-left">{t('t37')}</label>
-
-                  {/* Input wrapper pentru centrare perfectă */}
-                  <div className="flex justify-center md:justify-start">
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="w-full max-w-sm md:max-w-none px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#B7D662] focus:ring-2 focus:ring-[#B7D662]/20 transition-all text-center md:text-left"
-                    />
-                  </div>
-
-                  <p className="text-xs text-gray-500 mt-2 text-center md:text-left">{t('t38')}</p>
+                <div className="flex-1 w-full text-center md:text-left">
+                  <p className="text-lg font-semibold text-gray-900">{tc('valabil', { zile: zileValabil })}</p>
+                  <p className="text-sm text-gray-600 mt-1">{tc('urmatorul')}</p>
                 </div>
 
                 {/* Program Badge - RESPONSIVE */}
@@ -436,11 +391,7 @@ export default function Bilete() {
                   </ul>
 
                   {/* Add button */}
-                  <button
-                    id={`add-${ticket.id}`}
-                    onClick={() => addToCart(ticket)}
-                    className="w-full py-3 bg-gradient-to-r from-[#B7D662] to-[#95b540] hover:from-[#95b540] hover:to-[#B7D662] text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-md"
-                  >{t('t45')}</button>
+                  <ButonCos cod={ticket.cod} nume={ticket.name} disponibil={online(ticket.cod)} />
                 </div>
               </div>
             ))}
@@ -494,9 +445,10 @@ export default function Bilete() {
                       v1: sub.price
                     })}</div>
                   <p className="text-sm text-gray-600 mb-3">{sub.description}</p>
-                  <div className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full inline-block">{t('t49', {
+                  <div className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full inline-block mb-4">{t('t49', {
                       v1: sub.savings
                     })}</div>
+                  <ButonCos cod={sub.cod} nume={sub.name} disponibil={online(sub.cod)} />
                 </div>
               ))}
             </div>
@@ -649,46 +601,9 @@ export default function Bilete() {
 
       <Footer />
 
-      {/* Modal Sistem Indisponibil */}
-      {showUnavailableModal && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('t68')}</h3>
-
-              <p className="text-gray-600 mb-6">{t('t69')}</p>
-
-              <div className="space-y-3 text-left mb-6">
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-[#B7D662] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-gray-700">{t('t70')}</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-[#B7D662] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-gray-700">{t.rich('t71', {
-                      a1: chunks => <a href="tel:+40724538928" className="text-[#B7D662] font-semibold">{chunks}</a>
-                    })}</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setShowUnavailableModal(false)}
-                className="w-full py-3 bg-[#B7D662] hover:bg-[#95b540] text-white font-semibold rounded-xl transition-colors"
-              >{t('t72')}</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <BaraCos
+        produse={[...ticketTypes, ...subscriptions].map((x) => ({ cod: x.cod, nume: x.name, pret: x.price }))}
+      />
 
       <style jsx>{`
         @keyframes float {

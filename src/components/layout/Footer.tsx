@@ -1,12 +1,35 @@
 'use client'
 
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import { useEffect, useRef } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { Link } from '@/src/i18n/navigation'
+import { FIRMA, MAGAZIN, NETOPIA_LOGO } from '@/src/lib/firma'
+
+/**
+ * Sigla NETOPIA vine dintr-un script al lor, care se pune singur unde e inserat.
+ * Îl inserăm la montare, ca să apară și după navigarea între pagini.
+ */
+function SiglaNetopia({ eticheta }: { eticheta: string }) {
+  const loc = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = loc.current
+    if (!el || el.childElementCount > 0) return
+    const s = document.createElement('script')
+    s.src = `https://mny.ro/npId.js?p=${NETOPIA_LOGO}`
+    s.type = 'text/javascript'
+    s.setAttribute('data-version', 'orizontal')
+    s.setAttribute('data-contrast-color', '#f9fafb')
+    el.appendChild(s)
+  }, [])
+  return <div ref={loc} aria-label={eticheta} className="min-h-[50px] min-w-[200px]" />
+}
 
 export default function Footer() {
   const t = useTranslations('subsol')
   const m = useTranslations('meniu')
+  const limba = useLocale()
+  const magazin = (cale = '') => `${MAGAZIN}/${limba}${cale}`
 
   return (
     <footer className="bg-gray-50 text-gray-800 relative" id="contact">
@@ -29,8 +52,8 @@ export default function Footer() {
       </div>
       
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8 lg:gap-10 mb-12">
+          <div>
             <Image 
               src="/logo-color.png"
               alt="Piatra de Sus"
@@ -100,6 +123,34 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a href={magazin()} className="text-gray-900 font-semibold hover:text-[#B7D662] transition-colors text-sm">
+                  {t('cumpara')} →
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">{t('informatii')}</h3>
+            <ul className="space-y-2.5 text-sm">
+              {[
+                { name: t('termeniVanzare'), href: magazin('/informatii/termeni') },
+                { name: t('livrare'), href: magazin('/informatii/livrare') },
+                { name: t('anulare'), href: magazin('/informatii/anulare') },
+              ].map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="text-gray-600 hover:text-[#B7D662] transition-colors">{l.name}</a>
+                </li>
+              ))}
+              <li><Link href="/pages/terms" className="text-gray-600 hover:text-[#B7D662] transition-colors">{t('termeni')}</Link></li>
+              <li><Link href="/pages/confidentialitate" className="text-gray-600 hover:text-[#B7D662] transition-colors">{t('confidentialitate')}</Link></li>
+              <li><Link href="/pages/cookies" className="text-gray-600 hover:text-[#B7D662] transition-colors">{t('cookies')}</Link></li>
+              <li>
+                <a href={magazin('/retragere')} className="font-semibold text-gray-900 underline underline-offset-2 hover:text-[#B7D662]">
+                  {t('retragere')}
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -157,17 +208,19 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-200 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-gray-600 text-center md:text-left">
-              <p>{t('drepturi', { an: new Date().getFullYear() })}</p>
+          <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-6">
+            <div className="text-sm text-gray-600 text-center lg:text-left space-y-1">
+              <p className="font-semibold text-gray-800">{FIRMA.nume}</p>
+              <p>CIF {FIRMA.cui} · {FIRMA.regCom} · {t('capital')} {FIRMA.capital}</p>
+              <p>{FIRMA.sediu}</p>
+              <p className="pt-2 text-gray-500">{t('drepturi', { an: new Date().getFullYear() })}</p>
             </div>
-            
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm">
-              <Link href="/pages/cookies" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('cookies')}</Link>
-
-              <Link href="/pages/terms" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('termeni')}</Link>
-              <Link href="/pages/confidentialitate" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">{t('confidentialitate')}</Link>
-              <a href="https://anpc.ro" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#B7D662] transition-colors whitespace-nowrap">ANPC</a>
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <a href="https://reclamatiisal.anpc.ro/" target="_blank" rel="noopener noreferrer" aria-label={t('sal')}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/anpc-sal.png" alt={t('sal')} width={250} height={50} className="w-[250px] h-[50px]" />
+              </a>
+              <SiglaNetopia eticheta={t('plata')} />
             </div>
           </div>
         </div>
